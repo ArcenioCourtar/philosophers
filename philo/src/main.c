@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:59:14 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/12 15:37:41 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:43:03 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,50 @@
 
 void	*pt_start(void *arg)
 {
-	int	*test;
-
-	test = arg;
-	*test += 1;
 	return (NULL);
 }
 
-void	alloc_struct(t_data *dat)
+void	*timer_start(void *arg)
+{
+	t_data	*dat;
+
+	dat = arg;
+}
+
+t_data	*alloc_struct(void)
+{
+	int		i;
+	t_data	*new;
+
+	i = 0;
+	new = malloc(sizeof(t_data));
+	new->num = 3;
+	new->ttd = 5;
+	new->tte = 0;
+	new->tts = 0;
+	gettimeofday(&(new->time), NULL);
+	new->tid = malloc(sizeof(pthread_t) * new->num + 1);
+	new->stick = malloc(sizeof(int) * new->num + 1);
+	while (i < new->num + 1)
+	{
+		new->stick[i] = 1;
+		i++;
+	}
+	new->life = 1;
+	return (new);
+}
+
+void	start_threads(t_data *dat)
 {
 	int	i;
 
 	i = 0;
-	dat = malloc(sizeof(t_data));
-	dat->num = 3;
-	dat->ttd = 5;
-	dat->tte = 0;
-	dat->tts = 0;
-	gettimeofday(&(dat->time), NULL);
-	dat->tid = malloc(sizeof(pthread_t) * dat->num);
-	dat->stick = malloc(sizeof(int) * dat->num + 1);
-	while (i < dat->num + 1)
+	while (i < dat->num)
 	{
-		dat->stick[i] = 1;
+		pthread_create(&(dat->tid[i]), NULL, pt_start, dat);
 		i++;
 	}
-	dat->life = 1;
+	pthread_create(&(dat->tid[i]), NULL, pt_start, dat);
 }
 
 /*
@@ -57,7 +75,7 @@ int	main(int argc, char **argv)
 {
 	t_data	*dat;
 
-	alloc_struct(dat);
-	
+	dat = alloc_struct();
+	start_threads(dat);
 	return (0);
 }

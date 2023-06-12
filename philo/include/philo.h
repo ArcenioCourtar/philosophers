@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:06:26 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/12 15:37:27 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:44:08 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,17 @@ typedef struct s_data
 	int				ttd;
 	int				tte;
 	int				tts;
+	struct timeval	start;
 	struct timeval	time;
+	struct timeval	*t_meal;
 	pthread_t		*tid;
 	int				*stick;
 	int				life;
 }	t_data;
+
+typedef struct s_stat
+{
+	struct timeval	t_meal;
+}	t_stat;
 
 #endif
