@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:59:14 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/12 12:50:28 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:37:41 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,34 @@
 #include <sys/time.h>	// gettimeofday()
 #include "../include/philo.h"
 
-void *pt_start(void *arg)
+void	*pt_start(void *arg)
 {
-	while (1) {
-		printf("yo");
-	}
+	int	*test;
+
+	test = arg;
+	*test += 1;
 	return (NULL);
+}
+
+void	alloc_struct(t_data *dat)
+{
+	int	i;
+
+	i = 0;
+	dat = malloc(sizeof(t_data));
+	dat->num = 3;
+	dat->ttd = 5;
+	dat->tte = 0;
+	dat->tts = 0;
+	gettimeofday(&(dat->time), NULL);
+	dat->tid = malloc(sizeof(pthread_t) * dat->num);
+	dat->stick = malloc(sizeof(int) * dat->num + 1);
+	while (i < dat->num + 1)
+	{
+		dat->stick[i] = 1;
+		i++;
+	}
+	dat->life = 1;
 }
 
 /*
@@ -31,23 +53,11 @@ void *pt_start(void *arg)
 	State changes should be displayed with a message as follows:
 	[timestamp] [philo num] [action]
 */
-int	main(void)
+int	main(int argc, char **argv)
 {
-	struct timeval	cur_time;
-	int	phil_num = 3;
-	pthread_t test;
-	int *chopsticks = malloc(sizeof(int));
-	int i = 0;
+	t_data	*dat;
+
+	alloc_struct(dat);
 	
-	*chopsticks = phil_num + 1;
-	printf("thread id: %lu\n", test);
-	while (i < phil_num) {
-		if (pthread_create(&test, NULL, pt_start, NULL) != 0)
-			return (0);
-		printf("thread id: %lu\n", test);
-		i++;
-	}
-	gettimeofday(&cur_time, NULL);
-	printf("sec: %ld, ms: %i\n", cur_time.tv_sec, cur_time.tv_usec);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 16:57:57 by acourtar          #+#    #+#              #
-#    Updated: 2023/06/12 12:54:28 by acourtar         ###   ########.fr        #
+#    Updated: 2023/06/12 15:55:06 by acourtar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,6 @@ fclean:
 
 $(DIR_OBJ)%.o: $(DIR_SRC)%.c $(HEADERFILES)
 	@mkdir -p $(DIR_OBJ)
-	$(CC) -c -g $(CFLAGS) -o $@ $<
+	$(CC) -c -g $(CFLAGS) -pthread -o $@ $<
 
 .PHONY: clean fclean re all
