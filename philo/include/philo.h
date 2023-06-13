@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:06:26 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/13 15:58:59 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:29:37 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,31 @@
 # include <stdbool.h>	// bool!
 # include <limits.h>	// useful defines
 
+typedef pthread_mutex_t	t_mutex;
+
 typedef struct s_data
 {
-	u_int64_t		num;
+	int				num;
 	u_int64_t		ttd;
 	u_int64_t		tte;
 	u_int64_t		tts;
-	u_int64_t		eat_num;
-	struct timeval	start;
-	struct timeval	time;
-	struct timeval	*t_meal;
+	int				eat_num;
 	pthread_t		*tid;
+	u_int64_t		time_st;
+	u_int64_t		time_cur;
+	t_mutex			time_cur_mut;
+	u_int64_t		*time_meal;
+	t_mutex			*time_meal_mut;
 	int				*stick;
-	int				life;
+	t_mutex			*stick_mut;
 }	t_data;
 
-typedef struct s_stat
+typedef struct s_args
 {
-	struct timeval	t_meal;
-}	t_stat;
+	t_data	*dat;
+	int		i;
+}	t_args;
+
 
 u_int64_t	my_gettime(void);
 bool		ret_msg(const char *str, bool ret);

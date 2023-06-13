@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:51:26 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/13 15:58:49 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:14:36 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static bool	assign_num(int argc, char **argv, t_data *dat)
 	tmp = ft_atol(argv[i]);
 	if (tmp > INT_MAX)
 		return (false);
-	dat->num = tmp * 1000;
+	dat->num = tmp;
 	i++;
 	tmp = ft_atol(argv[i]);
 	if (tmp > INT_MAX)
@@ -65,7 +65,7 @@ static bool	assign_num(int argc, char **argv, t_data *dat)
 		tmp = ft_atol(argv[i]);
 		if (tmp > INT_MAX)
 			return (false);
-		dat->eat_num = tmp * 1000;
+		dat->eat_num = tmp;
 	}
 	else
 		dat->eat_num = -1;
