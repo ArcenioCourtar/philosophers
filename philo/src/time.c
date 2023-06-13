@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 16:59:14 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/13 15:52:51 by acourtar         ###   ########.fr       */
+/*   Created: 2023/06/13 14:53:18 by acourtar          #+#    #+#             */
+/*   Updated: 2023/06/13 14:56:59 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-bool	ret_msg(const char *str, bool ret)
+u_int64_t	my_gettime(void)
 {
-	printf("%s\n", str);
-	return (ret);
-}
+	struct timeval	newtime;
 
-/*
-	args: phil_num, death_time, eat_time, sleep_time, (eat_max_amount).
-	State changes should be displayed with a message as follows:
-	[timestamp] [philo num] [action]
-*/
-int	main(int argc, char **argv)
-{
-	t_data	dat;
-
-	if (!parse_input(argc, argv, &dat))
-		return (0);
-	return (0);
+	gettimeofday(&newtime, NULL);
+	return (newtime.tv_sec * 1000000 + newtime.tv_usec);
 }

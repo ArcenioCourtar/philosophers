@@ -6,14 +6,14 @@
 #    By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 16:57:57 by acourtar          #+#    #+#              #
-#    Updated: 2023/06/12 15:55:06 by acourtar         ###   ########.fr        #
+#    Updated: 2023/06/13 15:59:28 by acourtar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= cc
 NAME		= philo
-CFLAGS		= # -Wall -Werror -Wextra
-SRCFILES	= main.c
+CFLAGS		= #-Wall -Werror -Wextra
+SRCFILES	= main.c time.c parsing_1.c parsing_2.c
 			
 HEADERFILES	= $(DIR_INC)philo.h
 
