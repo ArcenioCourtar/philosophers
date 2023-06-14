@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:06:26 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/14 17:28:41 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:26:33 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/time.h>	// gettimeofday()
 # include <stdbool.h>	// bool!
 # include <limits.h>	// useful defines
+# define TIME_S 100		// 0.1ms sleep time
 
 typedef pthread_mutex_t	t_mutex;
 

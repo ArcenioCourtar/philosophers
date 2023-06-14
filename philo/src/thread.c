@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 17:26:35 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/14 18:06:41 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:55:35 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,41 @@ void	*pt_philo(void *args)
 	dat = input->dat;
 	philonum = input->i;
 	free(args);
-	printf("philo# %i\n", philonum);
+	while (1)
+	{
+		if (philonum == 0)
+		{
+			pthread_mutex_lock(&(dat->stick_mut[dat->num - 1]));
+			pthread_mutex_lock(&(dat->stick_mut[philonum]));
+		}
+		else if (philonum == dat->num - 1)
+		{
+			pthread_mutex_lock(&(dat->stick_mut[philonum - 1]));
+			pthread_mutex_lock(&(dat->stick_mut[0]));
+		}
+		else
+		{
+			pthread_mutex_lock(&(dat->stick_mut[philonum - 1]));
+			pthread_mutex_lock(&(dat->stick_mut[philonum]));
+		}
+		printf("I");
+		usleep(TIME_S);
+		if (philonum == 0)
+		{
+			pthread_mutex_unlock(&(dat->stick_mut[dat->num - 1]));
+			pthread_mutex_unlock(&(dat->stick_mut[philonum]));
+		}
+		else if (philonum == dat->num - 1)
+		{
+			pthread_mutex_unlock(&(dat->stick_mut[philonum - 1]));
+			pthread_mutex_unlock(&(dat->stick_mut[0]));
+		}
+		else
+		{
+			pthread_mutex_unlock(&(dat->stick_mut[philonum - 1]));
+			pthread_mutex_unlock(&(dat->stick_mut[philonum]));
+		}
+	}
 	return (NULL);
 }
 
