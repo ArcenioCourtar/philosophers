@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:06:26 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/13 19:29:37 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:28:41 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ typedef struct s_args
 	int		i;
 }	t_args;
 
-
 u_int64_t	my_gettime(void);
 bool		ret_msg(const char *str, bool ret);
 bool		parse_input(int argc, char **argv, t_data *dat);
+void		init_struct(t_data *dat);
+void		start_philo(t_data *dat);
+void		start_babysitter(t_data *dat);
 
 #endif
