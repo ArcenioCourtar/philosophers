@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:06:26 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/14 18:26:33 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:22:00 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,25 @@ typedef struct s_data
 	t_mutex			time_cur_mut;
 	u_int64_t		*time_meal;
 	t_mutex			*time_meal_mut;
-	int				*stick;
+	bool			*stick;
 	t_mutex			*stick_mut;
+	t_mutex			ready;
 }	t_data;
 
-typedef struct s_args
+typedef struct s_me
+{
+	int				num;
+	int				i[2];
+	u_int64_t		time_cur;
+	u_int64_t		time_meal;
+	u_int64_t		time_sleep;
+}	t_me;
+
+typedef struct s_tmp
 {
 	t_data	*dat;
 	int		i;
-}	t_args;
+}	t_tmp;
 
 u_int64_t	my_gettime(void);
 bool		ret_msg(const char *str, bool ret);
