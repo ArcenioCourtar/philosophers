@@ -6,7 +6,7 @@
 #    By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 16:57:57 by acourtar          #+#    #+#              #
-#    Updated: 2023/06/14 17:51:18 by acourtar         ###   ########.fr        #
+#    Updated: 2023/06/15 12:32:33 by acourtar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,5 +42,11 @@ fclean:
 $(DIR_OBJ)%.o: $(DIR_SRC)%.c $(HEADERFILES)
 	@mkdir -p $(DIR_OBJ)
 	$(CC) -c -g $(CFLAGS) -pthread -o $@ $<
+
+sanadd: $(ALL_OBJ)
+	$(CC) $(CFLAGS) $(ALL_OBJ) -pthread -fsanitize=address -o $(NAME)
+
+santhr: $(ALL_OBJ)
+	$(CC) $(CFLAGS) $(ALL_OBJ) -pthread -fsanitize=thread -o $(NAME)
 
 .PHONY: clean fclean re all
