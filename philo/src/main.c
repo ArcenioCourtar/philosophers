@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:59:14 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/15 15:05:04 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/17 17:23:13 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,23 @@ bool	ret_msg(const char *str, bool ret)
 	return (ret);
 }
 
+void	detach_test(t_data *dat)
+{
+	int	i;
+
+	i = 0;
+	while (i < dat->num)
+	{
+		pthread_detach(dat->tid[i]);
+		i++;
+	}
+}
+
 /*
 	args: phil_num, death_time, eat_time, sleep_time, (eat_max_amount).
 	State changes should be displayed with a message as follows:
 	[timestamp] [philo num] [action]
+	NEED TO STOP EACH THREAD BEFORE TERMINATION TO STOP SANITIZER FROM CRYING
 */
 int	main(int argc, char **argv)
 {
@@ -33,6 +46,7 @@ int	main(int argc, char **argv)
 	start_philo(&dat);
 	start_babysitter(&dat);
 	pthread_join(dat.tid[dat.num], NULL);
+	detach_test(&dat);
 	printf("reaper has executed\n");
 	return (0);
 }
