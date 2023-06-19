@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:59:14 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/17 17:23:13 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:31:40 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,6 @@ bool	ret_msg(const char *str, bool ret)
 {
 	printf("%s\n", str);
 	return (ret);
-}
-
-void	detach_test(t_data *dat)
-{
-	int	i;
-
-	i = 0;
-	while (i < dat->num)
-	{
-		pthread_detach(dat->tid[i]);
-		i++;
-	}
 }
 
 /*
@@ -46,7 +34,6 @@ int	main(int argc, char **argv)
 	start_philo(&dat);
 	start_babysitter(&dat);
 	pthread_join(dat.tid[dat.num], NULL);
-	detach_test(&dat);
 	printf("reaper has executed\n");
 	return (0);
 }

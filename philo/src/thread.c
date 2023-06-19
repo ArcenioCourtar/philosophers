@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 17:26:35 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/17 19:55:17 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:37:37 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ void	init_myself(t_data **dat, t_me *me, void *args)
 	me->num = tmp->i;
 	stickindexer(me->num, (*dat)->num, me->i);
 	free(args);
-	pthread_mutex_lock(&(*dat)->ready);
 	me->time_cur = (*dat)->time_st;
 	me->time_meal = (*dat)->time_st;
-	pthread_mutex_unlock(&(*dat)->ready);
 }
 
 void	take_stick(t_data *dat, t_me *me, bool have_stick[2], bool uneven)
@@ -117,7 +115,7 @@ void	meal_prep(t_data *dat, t_me *me)
 
 void	eat(t_data *dat, t_me *me)
 {
-	int	i[2];
+	unsigned int	sleeptime;
 
 	me->time_cur = my_gettime();
 	me->time_meal = me->time_cur;
@@ -125,20 +123,21 @@ void	eat(t_data *dat, t_me *me)
 	dat->time_meal[me->num] = me->time_meal;
 	pthread_mutex_unlock(&(dat->time_meal_mut[me->num]));
 	printf("%llu %i is eating\n", (me->time_cur - dat->time_st) / 1000, me->num);
-	stickindexer(me->num, dat->num, i);
+	sleeptime = dat->tte - TIME_S;
+	usleep(sleeptime);
 	while (me->time_cur - me->time_meal <= dat->tte)
 		me->time_cur = my_gettime();
-	pthread_mutex_lock(&(dat->stick_mut[i[0]]));
-	dat->stick[i[0]] = true;
-	pthread_mutex_unlock(&(dat->stick_mut[i[0]]));
-	pthread_mutex_lock(&(dat->stick_mut[i[1]]));
-	dat->stick[i[1]] = true;
-	pthread_mutex_unlock(&(dat->stick_mut[i[1]]));
+	pthread_mutex_lock(&(dat->stick_mut[me->i[0]]));
+	dat->stick[me->i[0]] = true;
+	pthread_mutex_unlock(&(dat->stick_mut[me->i[0]]));
+	pthread_mutex_lock(&(dat->stick_mut[me->i[1]]));
+	dat->stick[me->i[1]] = true;
+	pthread_mutex_unlock(&(dat->stick_mut[me->i[1]]));
 }
 
 void	go_sleep(t_data *dat, t_me *me)
 {
-	int	sleeptime;
+	unsigned int	sleeptime;
 
 	me->time_sleep = my_gettime();
 	printf("%llu %i is sleeping\n", (me->time_sleep - dat->time_st) / 1000, me->num);
@@ -161,7 +160,6 @@ void	*pt_philo(void *args)
 		eat(dat, &me);
 		go_sleep(dat, &me);
 	}
-	// printf("philo number %i, dat addr %p\n", me.num, dat);
 	return (NULL);
 }
 
@@ -194,6 +192,7 @@ void	*pt_countdown(void *args)
 	dat = args;
 	while (1)
 	{
+		usleep(TIME_S);
 		pthread_mutex_lock(&(dat->time_cur_mut));
 		if (kill_time(dat))
 		{
@@ -211,8 +210,15 @@ void	start_philo(t_data *dat)
 	int		i;
 	t_tmp	*args;
 
+	dat->time_st = my_gettime();
+	dat->time_cur = dat->time_st;
 	i = 0;
-	pthread_mutex_lock(&(dat->ready));
+	while (i < dat->num)
+	{
+		dat->time_meal[i] = dat->time_st;
+		i++;
+	}
+	i = 0;
 	while (i < dat->num)
 	{
 		args = malloc(sizeof(t_tmp));
@@ -223,15 +229,6 @@ void	start_philo(t_data *dat)
 		pthread_create(&(dat->tid[i]), NULL, pt_philo, args);
 		i++;
 	}
-	dat->time_st = my_gettime();
-	dat->time_cur = dat->time_st;
-	i = 0;
-	while (i < dat->num)
-	{
-		dat->time_meal[i] = dat->time_st;
-		i++;
-	}
-	pthread_mutex_unlock(&(dat->ready));
 }
 
 void	start_babysitter(t_data *dat)
