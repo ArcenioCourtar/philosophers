@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:06:26 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/15 17:22:00 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:53:04 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,7 @@ bool		parse_input(int argc, char **argv, t_data *dat);
 void		init_struct(t_data *dat);
 void		start_philo(t_data *dat);
 void		start_babysitter(t_data *dat);
+void		*pt_philo(void *args);
+void		*pt_countdown(void *args);
 
 #endif
