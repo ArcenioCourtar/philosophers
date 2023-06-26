@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 17:48:12 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/19 18:04:06 by acourtar         ###   ########.fr       */
+/*   Updated: 2023/06/20 12:30:46 by acourtar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static bool	kill_time(t_data *dat)
 		dat->time_cur = my_gettime();
 		if (dat->time_cur - dat->time_meal[i] >= dat->ttd)
 		{
-			printf("%llu %i died\n", (dat->time_cur - dat->time_meal[i]) / 1000, i);
+			printf("%llu %i died\n", (dat->time_meal[i] + dat->ttd - dat->time_st) / 1000, i);
 			printf("ACTUAL time elapsed: %llu\n", (dat->time_cur - dat->time_st) / 1000);
 			pthread_mutex_unlock(&(dat->time_meal_mut[i]));
 			return (true);
