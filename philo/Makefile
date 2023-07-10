@@ -1,20 +1,20 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/01 16:57:57 by acourtar          #+#    #+#              #
-#    Updated: 2023/06/19 17:46:59 by acourtar         ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: acourtar <acourtar@student.42.fr>            +#+                      #
+#                                                    +#+                       #
+#    Created: 2023/06/01 16:57:57 by acourtar      #+#    #+#                  #
+#    Updated: 2023/07/10 16:52:35 by acourtar      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= cc
 NAME		= philo
 CFLAGS		= #-Wall -Werror -Wextra
-SRCFILES	= main.c time.c parsing_1.c parsing_2.c init.c thread.c \
-			thr_philo.c thr_print.c thr_reaper.c
+SRCFILES	= main.c time.c parsing_1.c parsing_2.c init.c \
+			debugfunc.c
 			
 HEADERFILES	= $(DIR_INC)philo.h
 

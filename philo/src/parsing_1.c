@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing_1.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 15:51:26 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/13 16:14:36 by acourtar         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parsing_1.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: acourtar <acourtar@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/06/13 15:51:26 by acourtar      #+#    #+#                 */
+/*   Updated: 2023/07/10 16:49:48 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static bool	valid_input(int argc, char **argv, t_data *dat)
 bool	parse_input(int argc, char **argv, t_data *dat)
 {
 	if (argc != 5 && argc != 6)
-		return (ret_msg("Usage: ./philo num ttd tte tts ttenum", false));
+		return (ret_msg("Usage: ./philo num ttd tte tts tte_num", false));
 	if (!valid_input(argc, argv, dat))
 		return (false);
 	return (true);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acourtar <acourtar@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 16:59:14 by acourtar          #+#    #+#             */
-/*   Updated: 2023/06/19 17:31:40 by acourtar         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: acourtar <acourtar@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/06/01 16:59:14 by acourtar      #+#    #+#                 */
+/*   Updated: 2023/07/10 17:40:11 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ int	main(int argc, char **argv)
 	if (!parse_input(argc, argv, &dat))
 		return (0);
 	init_struct(&dat);
-	start_philo(&dat);
-	start_babysitter(&dat);
-	pthread_join(dat.tid[dat.num], NULL);
-	printf("reaper has executed\n");
+	debug_dat_cont(&dat);
+	create_threads(&dat);
 	return (0);
 }
