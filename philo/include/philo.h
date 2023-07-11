@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 17:06:26 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/11 16:28:37 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/11 18:26:39 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <sys/time.h>//	gettimeofday()
 # include <stdbool.h>//		bool!
 # include <limits.h>//		useful defines
-# define TIME_S 100//		0.1ms sleep time
+# define TIME_S 50//		0.1ms sleep time
 
 typedef pthread_mutex_t	t_mutex;
 
@@ -33,6 +33,9 @@ typedef struct s_data
 	int				eat_num;
 	pthread_t		*tid;
 	u_int64_t		time_start;
+	t_mutex			mut_ready;
+	bool			ready;
+	// debug
 	u_int64_t		debug_time[2];
 	int				debug_num;
 }	t_data;

@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/11 12:33:59 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/11 16:29:46 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/11 19:03:16 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,23 @@
 
 void	init_philo(t_tmp *args, t_me *me)
 {
+	bool	ready;
+
+	ready = false;
 	me->dat = args->dat;
 	me->num = args->i;
 	free(args);
+	while (1)
+	{
+		usleep(TIME_S);
+		pthread_mutex_lock(&(me->dat->mut_ready));
+		if (me->dat->ready == true)
+		{
+			pthread_mutex_unlock(&(me->dat->mut_ready));
+			break ;
+		}
+		pthread_mutex_unlock(&(me->dat->mut_ready));
+	}
 	me->time_cur = my_gettime();
 }
 
@@ -54,8 +68,8 @@ void	*routine_reaper(void *args)
 	dat = tmp->dat;
 	free(args);
 	time_cur = my_gettime();
-	printf("reaperman, time: %llu\n", time_diff(dat->time_start, time_cur));
-	debug_time_diff(dat, time_cur, -1);
+	// printf("reaperman, time: %llu\n", time_diff(dat->time_start, time_cur));
+	// debug_time_diff(dat, time_cur, -1);
 	return (NULL);
 }
 
@@ -68,8 +82,6 @@ bool	create_threads(t_data *dat)
 	if (!dat->tid)
 		return (false);
 	i = 0;
-	dat->time_start = my_gettime();
-	dat->debug_time[0] = dat->time_start; dat->debug_time[1] = dat->time_start; dat->debug_num = -1;
 	args = malloc(sizeof(t_tmp));
 	if (!args)
 		return (false);
@@ -85,6 +97,11 @@ bool	create_threads(t_data *dat)
 		pthread_create(&(dat->tid[i]), NULL, routine_philo, args);
 		i++;
 	}
+	dat->time_start = my_gettime();
+	dat->debug_time[0] = dat->time_start; dat->debug_time[1] = dat->time_start; dat->debug_num = -1;
+	pthread_mutex_lock(&(dat->mut_ready));
+	dat->ready = true;
+	pthread_mutex_unlock(&(dat->mut_ready));
 	return (true);
 }
 
