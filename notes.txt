@@ -1,0 +1,6 @@
+philo start benchmarks in microseconds (on f1r6s7)
+1: Setting start time and letting all threads run as soon as they're created.
+10	|	180 - 350
+50	|	650 - 950
+100	|	1200 - 1600
+200	|	2400 - 2700

@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 17:06:26 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/10 19:01:26 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/11 16:28:37 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ typedef struct s_data
 	u_int64_t		tts;
 	int				eat_num;
 	pthread_t		*tid;
+	u_int64_t		time_start;
+	u_int64_t		debug_time[2];
+	int				debug_num;
 }	t_data;
 
 typedef struct s_tmp
@@ -42,14 +45,17 @@ typedef struct s_tmp
 
 typedef struct s_me
 {
-	t_data	*dat;
-	int		num;
+	t_data		*dat;
+	int			num;
+	u_int64_t	time_cur;
 }	t_me;
 
 u_int64_t	my_gettime(void);
 bool		ret_msg(const char *str, bool ret);
 bool		parse_input(int argc, char **argv, t_data *dat);
 void		init_struct(t_data *dat);
+bool		create_threads(t_data *dat);
+void		join_threads(t_data *dat);
 
 //	debug
 void		debug_dat_cont(t_data *dat);
