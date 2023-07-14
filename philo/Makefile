@@ -6,7 +6,7 @@
 #    By: acourtar <acourtar@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/06/01 16:57:57 by acourtar      #+#    #+#                  #
-#    Updated: 2023/07/14 15:43:01 by acourtar      ########   odam.nl          #
+#    Updated: 2023/07/14 16:01:52 by acourtar      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC			= cc
 NAME		= philo
 CFLAGS		= #-Wall -Werror -Wextra
 SRCFILES	= main.c time.c parsing_1.c parsing_2.c init.c \
-			threads.c \
+			thr_management.c thr_routine_philo.c thr_routine_reaper.c \
 			mut_list.c debugfunc.c
 			
 HEADERFILES	= $(DIR_INC)philo.h

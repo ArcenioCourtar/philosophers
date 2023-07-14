@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 17:06:26 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/14 15:41:04 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/14 16:04:46 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void		mut_list_init(t_mutex *list, int len);
 void		mut_list_lock(t_mutex *list, int len);
 void		mut_list_unlock(t_mutex *list, int len);
 void		mut_list_destroy(t_mutex *list, int len);
-
+void		*routine_philo(void *args);
+void		*routine_reaper(void *args);
 
 //	debug
 void		debug_dat_cont(t_data *dat);
