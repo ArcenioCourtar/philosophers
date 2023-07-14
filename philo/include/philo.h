@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 17:06:26 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/14 16:04:46 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/14 20:27:56 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,43 @@
 
 typedef pthread_mutex_t	t_mutex;
 
+typedef struct s_uten
+{
+	int		last;
+	bool	held;
+}	t_uten;
+
 typedef struct s_data
 {
 	int				num;
 	u_int64_t		ttd;
 	u_int64_t		tte;
 	u_int64_t		tts;
+	t_mutex			*mut_eaten;
+	u_int64_t		*time_eaten;
 	int				eat_num;
 	pthread_t		*tid;
 	u_int64_t		time_start;
 	t_mutex			mut_ready;
-	t_mutex			*mut_ready_arr;
 	bool			ready;
-	// debug
-	u_int64_t		debug_time[2];
-	int				debug_num;
+	t_mutex			*mut_running;
+	bool			running;
+	struct s_uten	*uten;
+	t_mutex			*mut_uten;
 }	t_data;
 
 typedef struct s_tmp
 {
 	t_data	*dat;
-	int		i;
+	int		num;
 }	t_tmp;
 
 typedef struct s_me
 {
-	t_data		*dat;
 	int			num;
 	u_int64_t	time_cur;
+	u_int64_t	time_eat;
+	bool		held[2];
 }	t_me;
 
 u_int64_t	my_gettime(void);

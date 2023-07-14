@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/11 12:33:59 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/14 16:03:51 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/14 18:05:22 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	create_threads(t_data *dat)
 		if (!args)
 			return (false);
 		args->dat = dat;
-		args->i = i;
+		args->num = i;
 		pthread_create(&(dat->tid[i]), NULL, routine_philo, args);
 		i++;
 	}
@@ -39,6 +39,7 @@ bool	create_threads(t_data *dat)
 	return (true);
 }
 
+// Maybe destroy mutexes as well?
 void	join_threads(t_data *dat)
 {
 	int	i;
