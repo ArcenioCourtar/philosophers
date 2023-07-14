@@ -32,4 +32,7 @@ usleep() prevents constant CPU-hogging, making the best cases slightly worse,
 especially at lower philo counts, but the worst cases have been greatly improved.
 
 3: Creating all threads, and having them wait behind separate mutexes before setting start time.
+No discernible performance change between this and solution 2B.
+Except the code is now way harder to debug.
 
+Might be worth experimenting with in other parts of the program, though.

@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/11 12:33:59 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/11 19:03:16 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/14 15:43:22 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void	init_philo(t_tmp *args, t_me *me)
 	me->dat = args->dat;
 	me->num = args->i;
 	free(args);
+}
+
+void	wait_start(t_me *me)
+{
 	while (1)
 	{
 		usleep(TIME_S);
@@ -53,6 +57,7 @@ void	*routine_philo(void *args)
 	t_me	me;
 
 	init_philo(args, &me);
+	wait_start(&me);
 	printf("philo %i, time: %llu\n", me.num, time_diff(me.dat->time_start, me.time_cur));
 	debug_time_diff(me.dat, me.time_cur, me.num);
 	return (NULL);
@@ -67,9 +72,11 @@ void	*routine_reaper(void *args)
 	tmp = args;
 	dat = tmp->dat;
 	free(args);
-	time_cur = my_gettime();
-	// printf("reaperman, time: %llu\n", time_diff(dat->time_start, time_cur));
-	// debug_time_diff(dat, time_cur, -1);
+	pthread_mutex_lock(&(dat->mut_ready));
+	dat->time_start = my_gettime();
+	dat->debug_time[0] = dat->time_start; dat->debug_time[1] = dat->time_start; dat->debug_num = -1;
+	dat->ready = true;
+	pthread_mutex_unlock(&(dat->mut_ready));
 	return (NULL);
 }
 
@@ -82,11 +89,6 @@ bool	create_threads(t_data *dat)
 	if (!dat->tid)
 		return (false);
 	i = 0;
-	args = malloc(sizeof(t_tmp));
-	if (!args)
-		return (false);
-	args->dat = dat;
-	pthread_create(&(dat->tid[dat->num]), NULL, routine_reaper, args);
 	while (i < dat->num)
 	{
 		args = malloc(sizeof(t_tmp));
@@ -97,11 +99,11 @@ bool	create_threads(t_data *dat)
 		pthread_create(&(dat->tid[i]), NULL, routine_philo, args);
 		i++;
 	}
-	dat->time_start = my_gettime();
-	dat->debug_time[0] = dat->time_start; dat->debug_time[1] = dat->time_start; dat->debug_num = -1;
-	pthread_mutex_lock(&(dat->mut_ready));
-	dat->ready = true;
-	pthread_mutex_unlock(&(dat->mut_ready));
+	args = malloc(sizeof(t_tmp));
+	if (!args)
+		return (false);
+	args->dat = dat;
+	pthread_create(&(dat->tid[dat->num]), NULL, routine_reaper, args);
 	return (true);
 }
 

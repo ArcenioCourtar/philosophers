@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 17:06:26 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/11 18:26:39 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/14 15:41:04 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_data
 	pthread_t		*tid;
 	u_int64_t		time_start;
 	t_mutex			mut_ready;
+	t_mutex			*mut_ready_arr;
 	bool			ready;
 	// debug
 	u_int64_t		debug_time[2];
@@ -59,6 +60,11 @@ bool		parse_input(int argc, char **argv, t_data *dat);
 void		init_struct(t_data *dat);
 bool		create_threads(t_data *dat);
 void		join_threads(t_data *dat);
+void		mut_list_init(t_mutex *list, int len);
+void		mut_list_lock(t_mutex *list, int len);
+void		mut_list_unlock(t_mutex *list, int len);
+void		mut_list_destroy(t_mutex *list, int len);
+
 
 //	debug
 void		debug_dat_cont(t_data *dat);
