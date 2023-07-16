@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:02:39 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/14 19:26:58 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/16 18:45:34 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ void	start_simulation(t_data *dat)
 	pthread_mutex_unlock(&(dat->mut_ready));
 }
 
+void	simulation_end(t_data *dat)
+{
+	pthread_mutex_lock(&(dat->mut_running[0]));
+	dat->running = false;
+	pthread_mutex_unlock(&(dat->mut_running[0]));
+}
+
 t_data	*init_reaper(t_tmp *args)
 {
 	t_data	*dat;
@@ -44,14 +51,19 @@ void	check_eat_times(t_data *dat)
 
 	while (1)
 	{
-		usleep(TIME_S);
+		usleep(100);
 		i = 0;
-		time_curr = my_gettime();
 		while (i < dat->num)
 		{
+			time_curr = my_gettime();
 			pthread_mutex_lock(&(dat->mut_eaten[i]));
 			if (time_curr > (dat->time_eaten[i] + dat->ttd))
 			{
+				pthread_mutex_lock(&(dat->mut_print));
+				simulation_end(dat);
+				printf("\033[1;31m%llu %i has died.\n", \
+				dat->time_eaten[i] + dat->ttd, i);
+				pthread_mutex_unlock(&(dat->mut_print));
 				pthread_mutex_unlock(&(dat->mut_eaten[i]));
 				return ;
 			}
@@ -61,13 +73,6 @@ void	check_eat_times(t_data *dat)
 	}
 }
 
-void	simulation_end(t_data *dat)
-{
-	mut_list_lock(dat->mut_running, dat->num);
-	dat->running = false;
-	mut_list_unlock(dat->mut_running, dat->num);
-}
-
 void	*routine_reaper(void *args)
 {
 	t_data		*dat;
@@ -75,7 +80,5 @@ void	*routine_reaper(void *args)
 	dat = init_reaper(args);
 	start_simulation(dat);
 	check_eat_times(dat);
-	simulation_end(dat);
-	printf("reaper thread ended\n");
 	return (NULL);
 }

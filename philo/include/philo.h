@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 17:06:26 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/14 20:27:56 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/16 17:38:54 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,23 @@
 # include <sys/time.h>//	gettimeofday()
 # include <stdbool.h>//		bool!
 # include <limits.h>//		useful defines
-# define TIME_S 50//		0.1ms sleep time
+# define TIME_S 200//		sleep time in microseconds (1ms == 1000)
 
 typedef pthread_mutex_t	t_mutex;
+
+typedef enum e_act
+{
+	THINK,
+	EAT,
+	SLEEP,
+	DIE
+}	t_act;
+
+typedef struct s_action{
+	u_int64_t	time;
+	int			num;
+	t_act		action;
+}	t_action;
 
 typedef struct s_uten
 {
@@ -47,6 +61,7 @@ typedef struct s_data
 	bool			running;
 	struct s_uten	*uten;
 	t_mutex			*mut_uten;
+	t_mutex			mut_print;
 }	t_data;
 
 typedef struct s_tmp
@@ -75,6 +90,8 @@ void		mut_list_unlock(t_mutex *list, int len);
 void		mut_list_destroy(t_mutex *list, int len);
 void		*routine_philo(void *args);
 void		*routine_reaper(void *args);
+void		time_and_print(t_me *me, t_data *dat, const char *txt, \
+u_int64_t *ptr_time);
 
 //	debug
 void		debug_dat_cont(t_data *dat);

@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 17:17:25 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/14 19:29:31 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/16 18:08:58 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ void	init_struct(t_data *dat)
 	if (!(dat->mut_uten))
 		return ;
 	mut_list_init(dat->mut_uten, dat->num);
+	pthread_mutex_init(&(dat->mut_print), NULL);
 }

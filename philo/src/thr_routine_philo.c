@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:02:41 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/14 20:06:15 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/16 18:30:59 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ bool	check_simulation_status(int num, t_data *dat)
 {
 	bool	status;
 
-	pthread_mutex_lock(&(dat->mut_running[num]));
+	pthread_mutex_lock(&(dat->mut_running[0]));
 	status = dat->running;
-	pthread_mutex_unlock(&(dat->mut_running[num]));
+	pthread_mutex_unlock(&(dat->mut_running[0]));
 	return (status);
 }
 

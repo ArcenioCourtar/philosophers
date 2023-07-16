@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/11 12:33:59 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/14 18:05:22 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/16 17:48:39 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ void	join_threads(t_data *dat)
 		pthread_join(dat->tid[i], NULL);
 		i++;
 	}
-	printf("all threads closed\n");
+	printf("-----------------------------------\n");
 }
