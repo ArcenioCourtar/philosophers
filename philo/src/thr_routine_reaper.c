@@ -6,12 +6,14 @@
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:02:39 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/16 18:45:34 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/18 15:21:03 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+// start simulation, all philo threads wait before this section is executed.
+// set all time_eaten values to 0 (start of the simulation).
 void	start_simulation(t_data *dat)
 {
 	int	i;
@@ -23,16 +25,18 @@ void	start_simulation(t_data *dat)
 		dat->time_eaten[i] = 0;
 		i++;
 	}
-	dat->time_start = my_gettime();
 	dat->ready = true;
+	dat->time_start = my_gettime();
 	pthread_mutex_unlock(&(dat->mut_ready));
 }
 
+// Function called if the simulation needs to end because a philo died or they
+// ate enough.
 void	simulation_end(t_data *dat)
 {
-	pthread_mutex_lock(&(dat->mut_running[0]));
+	pthread_mutex_lock(&(dat->mut_running));
 	dat->running = false;
-	pthread_mutex_unlock(&(dat->mut_running[0]));
+	pthread_mutex_unlock(&(dat->mut_running));
 }
 
 t_data	*init_reaper(t_tmp *args)
@@ -44,35 +48,7 @@ t_data	*init_reaper(t_tmp *args)
 	return (dat);
 }
 
-void	check_eat_times(t_data *dat)
-{
-	int			i;
-	u_int64_t	time_curr;
-
-	while (1)
-	{
-		usleep(100);
-		i = 0;
-		while (i < dat->num)
-		{
-			time_curr = my_gettime();
-			pthread_mutex_lock(&(dat->mut_eaten[i]));
-			if (time_curr > (dat->time_eaten[i] + dat->ttd))
-			{
-				pthread_mutex_lock(&(dat->mut_print));
-				simulation_end(dat);
-				printf("\033[1;31m%llu %i has died.\n", \
-				dat->time_eaten[i] + dat->ttd, i);
-				pthread_mutex_unlock(&(dat->mut_print));
-				pthread_mutex_unlock(&(dat->mut_eaten[i]));
-				return ;
-			}
-			pthread_mutex_unlock(&(dat->mut_eaten[i]));
-			i++;
-		}
-	}
-}
-
+// Checks if any philos are supposed to be dead, every 100 microseconds.
 void	*routine_reaper(void *args)
 {
 	t_data		*dat;

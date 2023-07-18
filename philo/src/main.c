@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 16:59:14 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/14 17:05:04 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/18 14:25:28 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,20 @@ bool	ret_msg(const char *str, bool ret)
 	return (ret);
 }
 
+// free stuff xd
+int	free_ret(void)
+{
+	return (0);
+}
+
 /*
-	args: phil_num, death_time, eat_time, sleep_time, (eat_max_amount).
-	State changes should be displayed with a message as follows:
-	[timestamp] [philo num] [action]
-	NEED TO STOP EACH THREAD BEFORE TERMINATION TO STOP SANITIZER FROM CRYING
+	First I parse the input, if the input is invalid, return from main().
+	If the input is valid, intialize the struct, if any errors occur while
+	initializing, free any memory and return from main().
+	Create the reaper thread and all philo threads, after which the simulation
+	starts.
+	Parent thread waits for all child threads to terminate.
+	Free and return from main().
 */
 int	main(int argc, char **argv)
 {
@@ -30,9 +39,10 @@ int	main(int argc, char **argv)
 
 	if (!parse_input(argc, argv, &dat))
 		return (0);
-	init_struct(&dat);
-	debug_dat_cont(&dat); // debug
-	create_threads(&dat);
+	if (!init_struct(&dat))
+		return (free_ret());
+	if (!create_threads(&dat))
+		return (free_ret());
 	join_threads(&dat);
-	return (0);
+	return (free_ret());
 }

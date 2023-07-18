@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 17:06:26 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/16 17:38:54 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/18 15:27:00 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,49 +21,41 @@
 # include <stdbool.h>//		bool!
 # include <limits.h>//		useful defines
 # define TIME_S 200//		sleep time in microseconds (1ms == 1000)
+# define CONVERT 1000//		millisecond to microsecond factor
 
 typedef pthread_mutex_t	t_mutex;
 
-typedef enum e_act
-{
-	THINK,
-	EAT,
-	SLEEP,
-	DIE
-}	t_act;
-
-typedef struct s_action{
-	u_int64_t	time;
-	int			num;
-	t_act		action;
-}	t_action;
-
+// struct to keep track of utensil state.
 typedef struct s_uten
 {
 	int		last;
 	bool	held;
 }	t_uten;
 
+// main data structure.
 typedef struct s_data
 {
 	int				num;
 	u_int64_t		ttd;
 	u_int64_t		tte;
 	u_int64_t		tts;
+	int				noe;
+	int				*eat_num;
+	t_mutex			*mut_eat_num;
 	t_mutex			*mut_eaten;
 	u_int64_t		*time_eaten;
-	int				eat_num;
 	pthread_t		*tid;
 	u_int64_t		time_start;
 	t_mutex			mut_ready;
 	bool			ready;
-	t_mutex			*mut_running;
+	t_mutex			mut_running;
 	bool			running;
 	struct s_uten	*uten;
 	t_mutex			*mut_uten;
 	t_mutex			mut_print;
 }	t_data;
 
+// temporary struct used to pass along info to the threads.
 typedef struct s_tmp
 {
 	t_data	*dat;
@@ -78,22 +70,42 @@ typedef struct s_me
 	bool		held[2];
 }	t_me;
 
-u_int64_t	my_gettime(void);
-bool		ret_msg(const char *str, bool ret);
+// parsing
+
 bool		parse_input(int argc, char **argv, t_data *dat);
-void		init_struct(t_data *dat);
-bool		create_threads(t_data *dat);
-void		join_threads(t_data *dat);
+int			ft_isdigit(int c);
+size_t		ft_strlen(const char *s);
+int			ft_isspace(int c);
+long		ft_atol(const char *str);
+bool		ret_msg(const char *str, bool ret);
+
+// managing mutex arrays
+
 void		mut_list_init(t_mutex *list, int len);
 void		mut_list_lock(t_mutex *list, int len);
 void		mut_list_unlock(t_mutex *list, int len);
 void		mut_list_destroy(t_mutex *list, int len);
-void		*routine_philo(void *args);
-void		*routine_reaper(void *args);
+
+// time management
+
+u_int64_t	my_gettime(void);
 void		time_and_print(t_me *me, t_data *dat, const char *txt, \
 u_int64_t *ptr_time);
 
-//	debug
-void		debug_dat_cont(t_data *dat);
+bool		init_struct(t_data *dat);
+
+// thread related functions
+
+bool		create_threads(t_data *dat);
+void		*routine_philo(void *args);
+void		*routine_reaper(void *args);
+void		join_threads(t_data *dat);
+bool		check_simulation_status(t_data *dat);
+void		check_eat_times(t_data *dat);
+void		simulation_end(t_data *dat);
+
+// 5 function per file limit. :(
+
+bool		think(t_me *me, t_data *dat);
 
 #endif

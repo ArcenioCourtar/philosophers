@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/14 16:02:41 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/16 18:30:59 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/18 14:30:03 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	philo_main(t_me *me, t_data *dat);
 
+// pass the info inside of the temp struct to the philo,
+// free memory reserved for the temp struct.
 void	init_philo(t_tmp *args, t_me *me, t_data **dat)
 {
 	bool	ready;
@@ -28,6 +30,7 @@ void	init_philo(t_tmp *args, t_me *me, t_data **dat)
 	free(args);
 }
 
+// Busy wait until the reaper thread has started and changes this flag.
 void	wait_start(t_me *me, t_data *dat)
 {
 	while (1)
@@ -43,16 +46,8 @@ void	wait_start(t_me *me, t_data *dat)
 	me->time_cur = my_gettime();
 }
 
-bool	check_simulation_status(int num, t_data *dat)
-{
-	bool	status;
-
-	pthread_mutex_lock(&(dat->mut_running[0]));
-	status = dat->running;
-	pthread_mutex_unlock(&(dat->mut_running[0]));
-	return (status);
-}
-
+// philo routine.
+// initialize struct, wait for reaper thread to say go, perform simulation.
 void	*routine_philo(void *args)
 {
 	t_me	me;

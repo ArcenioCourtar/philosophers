@@ -6,12 +6,15 @@
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/11 12:33:59 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/16 17:48:39 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/18 15:27:42 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+// Create all threads.
+// TODO: freeing stuff in here if malloc fails
+// Maybe malloc() everything in a separate function before coming here?
 bool	create_threads(t_data *dat)
 {
 	t_tmp	*args;
@@ -39,7 +42,19 @@ bool	create_threads(t_data *dat)
 	return (true);
 }
 
-// Maybe destroy mutexes as well?
+// philo threads need to check the if the simulation is still running,
+// if it's not, they terminate.
+bool	check_simulation_status(t_data *dat)
+{
+	bool	status;
+
+	pthread_mutex_lock(&(dat->mut_running));
+	status = dat->running;
+	pthread_mutex_unlock(&(dat->mut_running));
+	return (status);
+}
+
+// parent thread waits here until all child threads are done running.
 void	join_threads(t_data *dat)
 {
 	int	i;
@@ -51,4 +66,31 @@ void	join_threads(t_data *dat)
 		i++;
 	}
 	printf("-----------------------------------\n");
+}
+
+// Get current time and print it.
+// Optional 4th arg to assign the current time to an additional place.
+void	time_and_print(t_me *me, t_data *dat, const char *txt, \
+u_int64_t *ptr_time)
+{
+	u_int64_t	time;
+
+	pthread_mutex_lock(&(dat->mut_print));
+	time = my_gettime();
+	if (!check_simulation_status(dat))
+	{
+		pthread_mutex_unlock(&(dat->mut_print));
+		return ;
+	}
+	if (ptr_time)
+	{
+		if (time >= *ptr_time + dat->ttd)
+		{
+			pthread_mutex_unlock(&(dat->mut_print));
+			return ;
+		}
+		*ptr_time = time;
+	}
+	printf("%llu %i %s", time / CONVERT, me->num, txt);
+	pthread_mutex_unlock(&(dat->mut_print));
 }

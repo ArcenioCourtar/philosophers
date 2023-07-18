@@ -6,17 +6,13 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/13 15:51:26 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/10 16:49:48 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/18 14:13:36 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int		ft_isdigit(int c);
-size_t	ft_strlen(const char *s);
-int		ft_isspace(int c);
-long	ft_atol(const char *str);
-
+// Check if all characters given as arguments are numbers.
 static bool	all_nums(const char *str)
 {
 	int	i;
@@ -33,7 +29,8 @@ static bool	all_nums(const char *str)
 	return (true);
 }
 
-// too beeg
+// If the input are all non-negative numbers, checks if they're within bounds.
+// TODO: make smol
 static bool	assign_num(int argc, char **argv, t_data *dat)
 {
 	int			i;
@@ -41,7 +38,7 @@ static bool	assign_num(int argc, char **argv, t_data *dat)
 
 	i = 1;
 	tmp = ft_atol(argv[i]);
-	if (tmp > INT_MAX)
+	if (tmp > INT_MAX || tmp == 0)
 		return (false);
 	dat->num = tmp;
 	i++;
@@ -65,13 +62,14 @@ static bool	assign_num(int argc, char **argv, t_data *dat)
 		tmp = ft_atol(argv[i]);
 		if (tmp > INT_MAX)
 			return (false);
-		dat->eat_num = tmp;
+		dat->noe = tmp;
 	}
 	else
-		dat->eat_num = -1;
+		dat->noe = -1;
 	return (true);
 }
 
+// Check whether te input is valid
 static bool	valid_input(int argc, char **argv, t_data *dat)
 {
 	int	i;
@@ -88,6 +86,7 @@ static bool	valid_input(int argc, char **argv, t_data *dat)
 	return (true);
 }
 
+// Parse the input given by the user
 bool	parse_input(int argc, char **argv, t_data *dat)
 {
 	if (argc != 5 && argc != 6)
