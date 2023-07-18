@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 17:06:26 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/18 15:27:00 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/18 15:33:34 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_uten
 	bool	held;
 }	t_uten;
 
-// main data structure.
+// main public data structure.
 typedef struct s_data
 {
 	int				num;
@@ -62,6 +62,8 @@ typedef struct s_tmp
 	int		num;
 }	t_tmp;
 
+// private struct for each philo, tracking the current time (obsolete?)
+// time they last ate, and if they're holding chopsticks
 typedef struct s_me
 {
 	int			num;
