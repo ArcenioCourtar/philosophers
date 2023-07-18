@@ -6,7 +6,7 @@
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/18 14:04:26 by acourtar      #+#    #+#                 */
-/*   Updated: 2023/07/18 15:26:43 by acourtar      ########   odam.nl         */
+/*   Updated: 2023/07/18 15:44:22 by acourtar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	check_eat_times(t_data *dat)
 		{
 			pthread_mutex_lock(&(dat->mut_print));
 			simulation_end(dat);
+			time_curr = my_gettime();
 			printf("\033[1;32m%llu all philos have eaten %i times\n", \
 			time_curr / CONVERT, dat->noe);
 			pthread_mutex_unlock(&(dat->mut_print));
