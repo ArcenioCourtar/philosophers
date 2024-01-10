@@ -71,9 +71,9 @@ void	join_threads(t_data *dat)
 // Get current time and print it.
 // Optional 4th arg to assign the current time to an additional place.
 void	time_and_print(t_me *me, t_data *dat, const char *txt, \
-u_int64_t *ptr_time)
+unsigned long long *ptr_time)
 {
-	u_int64_t	time;
+	unsigned long long	time;
 
 	pthread_mutex_lock(&(dat->mut_print));
 	time = my_gettime();

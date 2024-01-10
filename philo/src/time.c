@@ -18,10 +18,10 @@
 // During the first call, before the philosophers run, set the start time.
 // After that subtract the start time, from the current time, to get the 
 // time elapsed since the start of the simulation.
-u_int64_t	my_gettime(void)
+unsigned long long	my_gettime(void)
 {
 	struct timeval		newtime;
-	static u_int64_t	start_time = 0;
+	static unsigned long long	start_time = 0;
 
 	gettimeofday(&newtime, NULL);
 	if (start_time == 0)

@@ -72,7 +72,7 @@ bool	init_struct(t_data *dat)
 	dat->ready = false;
 	dat->running = true; 
 	pthread_mutex_init(&(dat->mut_ready), NULL);
-	dat->time_eaten = malloc(sizeof(u_int64_t) * dat->num);
+	dat->time_eaten = malloc(sizeof(unsigned long long) * dat->num);
 	if (!(dat->time_eaten))
 		return (false);
 	dat->mut_eaten = malloc_init_mutex(dat->num);

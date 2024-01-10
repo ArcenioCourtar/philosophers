@@ -36,16 +36,16 @@ typedef struct s_uten
 typedef struct s_data
 {
 	int				num;
-	u_int64_t		ttd;
-	u_int64_t		tte;
-	u_int64_t		tts;
+	unsigned long long		ttd;
+	unsigned long long		tte;
+	unsigned long long		tts;
 	int				noe;
 	int				*eat_num;
 	t_mutex			*mut_eat_num;
 	t_mutex			*mut_eaten;
-	u_int64_t		*time_eaten;
+	unsigned long long		*time_eaten;
 	pthread_t		*tid;
-	u_int64_t		time_start;
+	unsigned long long		time_start;
 	t_mutex			mut_ready;
 	bool			ready;
 	t_mutex			mut_running;
@@ -67,8 +67,8 @@ typedef struct s_tmp
 typedef struct s_me
 {
 	int			num;
-	u_int64_t	time_cur;
-	u_int64_t	time_eat;
+	unsigned long long	time_cur;
+	unsigned long long	time_eat;
 	bool		held[2];
 }	t_me;
 
@@ -90,9 +90,9 @@ void		mut_list_destroy(t_mutex *list, int len);
 
 // time management
 
-u_int64_t	my_gettime(void);
+unsigned long long	my_gettime(void);
 void		time_and_print(t_me *me, t_data *dat, const char *txt, \
-u_int64_t *ptr_time);
+unsigned long long *ptr_time);
 
 bool		init_struct(t_data *dat);
 
