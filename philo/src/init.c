@@ -61,7 +61,8 @@ t_mutex	*malloc_init_mutex(int num)
 	new = malloc(sizeof(t_mutex) * num);
 	if (!new)
 		return (NULL);
-	mut_list_init(new, num);
+	if (!mut_list_init(new, num))
+		return (NULL);
 	return (new);
 }
 

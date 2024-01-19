@@ -83,7 +83,7 @@ bool		ret_msg(const char *str, bool ret);
 
 // managing mutex arrays
 
-void		mut_list_init(t_mutex *list, int len);
+bool		mut_list_init(t_mutex *list, int len);
 void		mut_list_lock(t_mutex *list, int len);
 void		mut_list_unlock(t_mutex *list, int len);
 void		mut_list_destroy(t_mutex *list, int len);

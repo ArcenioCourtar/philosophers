@@ -12,7 +12,7 @@
 
 #include "../include/philo.h"
 
-void	mut_list_init(t_mutex *list, int len)
+bool	mut_list_init(t_mutex *list, int len)
 {
 	int	i;
 
@@ -20,9 +20,10 @@ void	mut_list_init(t_mutex *list, int len)
 	while (i < len)
 	{
 		if (pthread_mutex_init(&list[i], NULL) != 0)
-			printf("yo what happen\n");
+			return (false);
 		i++;
 	}
+	return (true);
 }
 
 void	mut_list_lock(t_mutex *list, int len)
