@@ -98,5 +98,8 @@ bool	init_struct(t_data *dat)
 		if (!(dat->mut_eat_num))
 			return (false);
 	}
+	dat->args = malloc(sizeof(t_tmp) * (dat->num + 1));
+	if (!(dat->args))
+		return (false);
 	return (true);
 }
