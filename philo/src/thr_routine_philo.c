@@ -15,7 +15,6 @@
 void	philo_main(t_me *me, t_data *dat);
 
 // pass the info inside of the temp struct to the philo,
-// free memory reserved for the temp struct.
 void	init_philo(t_tmp *args, t_me *me, t_data **dat)
 {
 	bool	ready;

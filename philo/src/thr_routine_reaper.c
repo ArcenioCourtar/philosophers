@@ -26,7 +26,7 @@ void	start_simulation(t_data *dat)
 		i++;
 	}
 	dat->ready = true;
-	dat->time_start = my_gettime();
+	my_gettime();
 	pthread_mutex_unlock(&(dat->mut_ready));
 }
 

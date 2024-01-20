@@ -48,7 +48,6 @@ typedef struct s_data
 	t_ullong	*time_eaten;
 	pthread_t	*tid;
 	t_tmp		*args;
-	t_ullong	time_start;
 	t_mutex		mut_ready;
 	bool		ready;
 	t_mutex		mut_running;
@@ -65,8 +64,8 @@ typedef struct s_tmp
 	int		num;
 }	t_tmp;
 
-// private struct for each philo, tracking the current time (obsolete?)
-// time they last ate, and if they're holding chopsticks
+// private struct for each philo
+// tracks time they last ate, and if they're holding forks
 typedef struct s_me
 {
 	int			num;
