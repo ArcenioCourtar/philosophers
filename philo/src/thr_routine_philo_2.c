@@ -94,7 +94,7 @@ I SLEEP
 */
 static bool	philo_sleep(t_me *me, t_data *dat)
 {
-	unsigned long long	time_sleep;
+	t_ullong	time_sleep;
 
 	time_sleep = my_gettime();
 	time_and_print(me, dat, "is sleeping\n", NULL);

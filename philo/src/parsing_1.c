@@ -34,7 +34,7 @@ static bool	all_nums(const char *str)
 static bool	assign_num(int argc, char **argv, t_data *dat)
 {
 	int			i;
-	unsigned long long	tmp;
+	t_ullong	tmp;
 
 	i = 1;
 	tmp = ft_atol(argv[i]);

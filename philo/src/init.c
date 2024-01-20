@@ -71,9 +71,12 @@ t_mutex	*malloc_init_mutex(int num)
 bool	init_struct(t_data *dat)
 {
 	dat->ready = false;
-	dat->running = true; 
+	dat->running = true;
+	dat->tid = malloc(sizeof(pthread_t) * (dat->num + 1));
+	if (!dat->tid)
+		return (false);
 	pthread_mutex_init(&(dat->mut_ready), NULL);
-	dat->time_eaten = malloc(sizeof(unsigned long long) * dat->num);
+	dat->time_eaten = malloc(sizeof(t_ullong) * dat->num);
 	if (!(dat->time_eaten))
 		return (false);
 	dat->mut_eaten = malloc_init_mutex(dat->num);

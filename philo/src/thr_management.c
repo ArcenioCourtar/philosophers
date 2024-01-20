@@ -20,9 +20,6 @@ bool	create_threads(t_data *dat)
 	t_tmp	*args;
 	int		i;
 
-	dat->tid = malloc(sizeof(pthread_t) * (dat->num + 1));
-	if (!dat->tid)
-		return (false);
 	i = 0;
 	while (i < dat->num)
 	{
@@ -71,9 +68,9 @@ void	join_threads(t_data *dat)
 // Get current time and print it.
 // Optional 4th arg to assign the current time to an additional place.
 void	time_and_print(t_me *me, t_data *dat, const char *txt, \
-unsigned long long *ptr_time)
+t_ullong *ptr_time)
 {
-	unsigned long long	time;
+	t_ullong	time;
 
 	pthread_mutex_lock(&(dat->mut_print));
 	time = my_gettime();

@@ -31,7 +31,7 @@ void	check_eat_num(t_data *dat, int num, int *lowest_eat)
 void	check_eat_times(t_data *dat)
 {
 	int			i;
-	unsigned long long	time_curr;
+	t_ullong	time_curr;
 	int			lowest_eat;
 
 	while (1)
