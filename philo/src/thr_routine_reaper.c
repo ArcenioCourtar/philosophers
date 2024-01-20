@@ -44,7 +44,6 @@ t_data	*init_reaper(t_tmp *args)
 	t_data	*dat;
 
 	dat = args->dat;
-	free(args);
 	return (dat);
 }
 

@@ -27,7 +27,6 @@ void	init_philo(t_tmp *args, t_me *me, t_data **dat)
 	me->held[1] = false;
 	me->time_eat = 0;
 	me->time_cur = 0;
-	free(args);
 }
 
 // Busy wait until the reaper thread has started and changes this flag.

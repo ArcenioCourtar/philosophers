@@ -26,12 +26,43 @@ void	check_eat_num(t_data *dat, int num, int *lowest_eat)
 	pthread_mutex_unlock(&(dat->mut_eat_num[num]));
 }
 
+static bool	death_check(t_data *dat, int i)
+{
+	t_ullong	time_curr;
+
+	pthread_mutex_lock(&(dat->mut_eaten[i]));
+	time_curr = my_gettime();
+	if (time_curr >= (dat->time_eaten[i] + dat->ttd))
+	{
+		pthread_mutex_lock(&(dat->mut_print));
+		simulation_end(dat);
+		printf("%llu %i died\n", time_curr / CONVERT, i);
+		pthread_mutex_unlock(&(dat->mut_print));
+		pthread_mutex_unlock(&(dat->mut_eaten[i]));
+		return (true);
+	}
+	pthread_mutex_unlock(&(dat->mut_eaten[i]));
+	return (false);
+}
+
+static bool	eat_num_check(t_data *dat, int lowest_eat)
+{
+	if (dat->noe != -1 && (lowest_eat >= dat->noe))
+	{
+		pthread_mutex_lock(&(dat->mut_print));
+		simulation_end(dat);
+		printf("%llu all philos have eaten %i times\n", \
+		my_gettime() / CONVERT, dat->noe);
+		pthread_mutex_unlock(&(dat->mut_print));
+		return (true);
+	}
+	return (false);
+}
+
 // Check if a philo has died, or if all philos have eaten enough.
-// TODO: split up into 3 functions.
 void	check_eat_times(t_data *dat)
 {
 	int			i;
-	t_ullong	time_curr;
 	int			lowest_eat;
 
 	while (1)
@@ -40,32 +71,13 @@ void	check_eat_times(t_data *dat)
 		i = 0;
 		while (i < dat->num)
 		{
-			pthread_mutex_lock(&(dat->mut_eaten[i]));
-			time_curr = my_gettime();
-			if (time_curr >= (dat->time_eaten[i] + dat->ttd))
-			{
-				pthread_mutex_lock(&(dat->mut_print));
-				simulation_end(dat);
-				printf("%llu %i died\n", \
-				time_curr / CONVERT, i);
-				pthread_mutex_unlock(&(dat->mut_print));
-				pthread_mutex_unlock(&(dat->mut_eaten[i]));
+			if (death_check(dat, i))
 				return ;
-			}
-			pthread_mutex_unlock(&(dat->mut_eaten[i]));
 			check_eat_num(dat, i, &lowest_eat);
 			i++;
 		}
-		if (dat->noe != -1 && (lowest_eat >= dat->noe))
-		{
-			pthread_mutex_lock(&(dat->mut_print));
-			simulation_end(dat);
-			time_curr = my_gettime();
-			printf("%llu all philos have eaten %i times\n", \
-			time_curr / CONVERT, dat->noe);
-			pthread_mutex_unlock(&(dat->mut_print));
+		if (eat_num_check(dat, lowest_eat))
 			return ;
-		}
 		usleep(100);
 	}
 }

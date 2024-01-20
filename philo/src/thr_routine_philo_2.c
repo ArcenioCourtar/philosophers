@@ -30,6 +30,18 @@ static void	return_utens(t_me *me, t_data *dat)
 	pthread_mutex_unlock(&(dat->mut_uten[u[1]]));
 }
 
+static bool	eat_done(t_me *me, t_data *dat)
+{
+	return_utens(me, dat);
+	if (dat->noe != -1)
+	{
+		pthread_mutex_lock(&(dat->mut_eat_num[me->num]));
+		dat->eat_num[me->num] += 1;
+		pthread_mutex_unlock(&(dat->mut_eat_num[me->num]));
+	}
+	return (true);
+}
+
 /*
 	Philo starts eating.
 	The time_and_print() function has an additional check that makes sure
@@ -57,16 +69,7 @@ static bool	eat(t_me *me, t_data *dat)
 		if (!check_simulation_status(dat))
 			return (false);
 		if (dat->tte <= my_gettime() - me->time_eat)
-		{
-			return_utens(me, dat);
-			if (dat->noe != -1)
-			{
-				pthread_mutex_lock(&(dat->mut_eat_num[me->num]));
-				dat->eat_num[me->num] += 1;
-				pthread_mutex_unlock(&(dat->mut_eat_num[me->num]));
-			}
-			return (true);
-		}
+			return (eat_done(me, dat));
 	}
 }
 

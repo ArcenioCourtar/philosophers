@@ -13,29 +13,22 @@
 #include "../include/philo.h"
 
 // Create all threads.
-// TODO: freeing stuff in here if malloc fails
-// Maybe malloc() everything in a separate function before coming here?
 bool	create_threads(t_data *dat)
 {
 	t_tmp	*args;
 	int		i;
 
+	args = dat->args;
 	i = 0;
 	while (i < dat->num)
 	{
-		args = malloc(sizeof(t_tmp));
-		if (!args)
-			return (false);
-		args->dat = dat;
-		args->num = i;
-		pthread_create(&(dat->tid[i]), NULL, routine_philo, args);
+		args[i].num = i;
+		args[i].dat = dat;
+		pthread_create(&(dat->tid[i]), NULL, routine_philo, &(args[i]));
 		i++;
 	}
-	args = malloc(sizeof(t_tmp));
-	if (!args)
-		return (false);
-	args->dat = dat;
-	pthread_create(&(dat->tid[dat->num]), NULL, routine_reaper, args);
+	args[i].dat = dat;
+	pthread_create(&(dat->tid[dat->num]), NULL, routine_reaper, &(args[i]));
 	return (true);
 }
 

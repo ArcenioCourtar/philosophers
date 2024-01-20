@@ -20,7 +20,7 @@
 // time elapsed since the start of the simulation.
 t_ullong	my_gettime(void)
 {
-	struct timeval		newtime;
+	struct timeval	newtime;
 	static t_ullong	start_time = 0;
 
 	gettimeofday(&newtime, NULL);

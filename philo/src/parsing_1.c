@@ -29,38 +29,40 @@ static bool	all_nums(const char *str)
 	return (true);
 }
 
-// If the input are all non-negative numbers, checks if they're within bounds.
-// TODO: make smol
-static bool	assign_num(int argc, char **argv, t_data *dat)
+static bool	assign_mandatory(char **argv, t_data *dat)
 {
-	int			i;
 	t_ullong	tmp;
 
-	i = 1;
-	tmp = ft_atol(argv[i]);
+	tmp = ft_atol(argv[1]);
 	if (tmp > INT_MAX || tmp == 0)
 		return (false);
 	dat->num = tmp;
-	i++;
-	tmp = ft_atol(argv[i]);
+	tmp = ft_atol(argv[2]);
 	if (tmp > INT_MAX)
 		return (false);
 	dat->ttd = tmp * 1000;
-	i++;
-	tmp = ft_atol(argv[i]);
+	tmp = ft_atol(argv[3]);
 	if (tmp > INT_MAX)
 		return (false);
 	dat->tte = tmp * 1000;
-	i++;
-	tmp = ft_atol(argv[i]);
+	tmp = ft_atol(argv[4]);
 	if (tmp > INT_MAX)
 		return (false);
 	dat->tts = tmp * 1000;
-	i++;
+	return (true);
+}
+
+// If the input are all non-negative numbers, checks if they're within bounds.
+static bool	assign_num(int argc, char **argv, t_data *dat)
+{
+	t_ullong	tmp;
+
+	if (!assign_mandatory(argv, dat))
+		return (false);
 	if (argc == 6)
 	{
-		tmp = ft_atol(argv[i]);
-		if (tmp > INT_MAX)
+		tmp = ft_atol(argv[5]);
+		if (tmp > INT_MAX || tmp == 0)
 			return (false);
 		dat->noe = tmp;
 	}
