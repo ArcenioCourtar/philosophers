@@ -70,7 +70,6 @@ typedef struct s_tmp
 typedef struct s_me
 {
 	int			num;
-	t_ullong	time_cur;
 	t_ullong	time_eat;
 	bool		held[2];
 }	t_me;

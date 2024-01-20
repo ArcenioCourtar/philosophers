@@ -106,7 +106,7 @@ static bool	philo_sleep(t_me *me, t_data *dat)
 		usleep(TIME_S);
 		if (!check_simulation_status(dat))
 			return (false);
-		if (dat->tts <= my_gettime() - me->time_cur)
+		if (dat->tts <= my_gettime() - time_sleep)
 			return (true);
 	}
 }
