@@ -32,7 +32,7 @@ static void	uten_status(t_me *me, t_data *dat, int uten_num, bool uten_side)
 		dat->uten[uten_num].last = me->num;
 		dat->uten[uten_num].held = true;
 		me->held[uten_side] = true;
-		time_and_print(me, dat, "grabs utensil.\n", NULL);
+		time_and_print(me, dat, "has taken a fork\n", NULL);
 	}
 	pthread_mutex_unlock(&(dat->mut_uten[uten_num]));
 }
@@ -54,6 +54,7 @@ static void	check_utens(t_me *me, t_data *dat)
 // Philo thinks, while they think they check for forks.
 bool	think(t_me *me, t_data *dat)
 {
+	time_and_print(me, dat, "is thinking\n", NULL);
 	while (1)
 	{
 		if (!check_simulation_status(dat))

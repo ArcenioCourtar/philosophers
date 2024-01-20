@@ -46,7 +46,7 @@ void	check_eat_times(t_data *dat)
 			{
 				pthread_mutex_lock(&(dat->mut_print));
 				simulation_end(dat);
-				printf("\033[1;31m%llu %i has died.\n", \
+				printf("%llu %i died\n", \
 				time_curr / CONVERT, i);
 				pthread_mutex_unlock(&(dat->mut_print));
 				pthread_mutex_unlock(&(dat->mut_eaten[i]));
@@ -61,7 +61,7 @@ void	check_eat_times(t_data *dat)
 			pthread_mutex_lock(&(dat->mut_print));
 			simulation_end(dat);
 			time_curr = my_gettime();
-			printf("\033[1;32m%llu all philos have eaten %i times\n", \
+			printf("%llu all philos have eaten %i times\n", \
 			time_curr / CONVERT, dat->noe);
 			pthread_mutex_unlock(&(dat->mut_print));
 			return ;

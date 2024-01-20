@@ -91,6 +91,6 @@ unsigned long long *ptr_time)
 		}
 		*ptr_time = time;
 	}
-	printf("%llu %i %s", time / CONVERT, me->num, txt);
+	printf("%llu %i %s", time / CONVERT, me->num + 1, txt);
 	pthread_mutex_unlock(&(dat->mut_print));
 }
