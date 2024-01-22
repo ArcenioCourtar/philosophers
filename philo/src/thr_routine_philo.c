@@ -32,13 +32,13 @@ static void	wait_start(t_data *dat)
 {
 	while (1)
 	{
-		pthread_mutex_lock(&(dat->mut_ready));
-		if (dat->ready == true)
+		pthread_mutex_lock(&(dat->mut_running));
+		if (dat->running == true)
 		{
-			pthread_mutex_unlock(&(dat->mut_ready));
+			pthread_mutex_unlock(&(dat->mut_running));
 			break ;
 		}
-		pthread_mutex_unlock(&(dat->mut_ready));
+		pthread_mutex_unlock(&(dat->mut_running));
 	}
 }
 

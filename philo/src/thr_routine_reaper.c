@@ -19,15 +19,15 @@ void	start_simulation(t_data *dat)
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&(dat->mut_ready));
+	pthread_mutex_lock(&(dat->mut_running));
 	while (i < dat->num)
 	{
 		dat->time_eaten[i] = 0;
 		i++;
 	}
-	dat->ready = true;
+	dat->running = true;
 	my_gettime();
-	pthread_mutex_unlock(&(dat->mut_ready));
+	pthread_mutex_unlock(&(dat->mut_running));
 }
 
 // Function called if the simulation needs to end because a philo died or they

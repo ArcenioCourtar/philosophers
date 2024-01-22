@@ -42,19 +42,17 @@ typedef struct s_data
 	t_ullong	tte;
 	t_ullong	tts;
 	int			noe;
+	bool		running;
+	t_mutex		mut_running;
+	t_mutex		mut_print;
 	int			*eat_num;
 	t_mutex		*mut_eat_num;
 	t_mutex		*mut_eaten;
 	t_ullong	*time_eaten;
 	pthread_t	*tid;
 	t_tmp		*args;
-	t_mutex		mut_ready;
-	bool		ready;
-	t_mutex		mut_running;
-	bool		running;
 	t_uten		*uten;
 	t_mutex		*mut_uten;
-	t_mutex		mut_print;
 }	t_data;
 
 // temporary struct used to pass along info to the threads.
