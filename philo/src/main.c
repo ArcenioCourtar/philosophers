@@ -19,8 +19,16 @@ bool	ret_msg(const char *str, bool ret)
 }
 
 // free stuff xd
-int	free_ret(void)
+int	free_ret(t_data *dat)
 {
+	free(dat->tid);
+	free(dat->time_eaten);
+	free(dat->uten);
+	free(dat->args);
+	free(dat->mut_eaten);
+	free(dat->mut_uten);
+	free(dat->eat_num);
+	free(dat->mut_eat_num);
 	return (0);
 }
 
@@ -41,11 +49,11 @@ int	main(int argc, char **argv)
 		return (0);
 	init_struct(&dat);
 	if (!init_struct_malloc(&dat))
-		return (free_ret());
+		return (free_ret(&dat));
 	if (!init_struct_mut(&dat))
-		return (free_ret());
+		return (free_ret(&dat));
 	if (!create_threads(&dat))
-		return (free_ret());
+		return (free_ret(&dat));
 	join_threads(&dat);
-	return (free_ret());
+	return (free_ret(&dat));
 }

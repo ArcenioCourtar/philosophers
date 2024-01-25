@@ -44,12 +44,15 @@ fclean:
 
 $(DIR_OBJ)%.o: $(DIR_SRC)%.c $(HEADERFILES)
 	@mkdir -p $(DIR_OBJ)
-	$(CC) -c -g $(CFLAGS) -pthread -o $@ $<
+	$(CC) -c $(CFLAGS) -pthread -o $@ $<
+
+debug: $(ALL_OBJ)
+	$(CC) -g $(CFLAGS) $(ALL_OBJ) -pthread -o $(NAME)
 
 sanadd: $(ALL_OBJ)
-	$(CC) $(CFLAGS) $(ALL_OBJ) -pthread -fsanitize=address -o $(NAME)
+	$(CC) -g $(CFLAGS) $(ALL_OBJ) -pthread -fsanitize=address -o $(NAME)
 
 santhr: $(ALL_OBJ)
-	$(CC) $(CFLAGS) $(ALL_OBJ) -pthread -fsanitize=thread -o $(NAME)
+	$(CC) -g $(CFLAGS) $(ALL_OBJ) -pthread -fsanitize=thread -o $(NAME)
 
 .PHONY: clean fclean re all
