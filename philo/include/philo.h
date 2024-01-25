@@ -92,8 +92,7 @@ void		mut_list_destroy(t_data *dat, t_mutex *list, int len);
 // time management
 
 t_ullong	my_gettime(void);
-void		time_and_print(t_me *me, t_data *dat, \
-const char *txt, t_ullong *ptr_time);
+t_ullong	time_and_print(t_me *me, t_data *dat, const char *txt);
 void		init_struct(t_data *dat);
 bool		init_struct_malloc(t_data *dat);
 bool		init_struct_mut(t_data *dat);
