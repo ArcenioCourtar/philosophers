@@ -48,7 +48,7 @@ t_data	*init_reaper(t_tmp *args)
 }
 
 // Checks if any philos are supposed to be dead, every 100 microseconds.
-void	*routine_reaper(void *args)
+void	*routine_reap(void *args)
 {
 	t_data		*dat;
 

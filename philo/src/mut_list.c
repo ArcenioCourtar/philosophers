@@ -12,16 +12,17 @@
 
 #include "../include/philo.h"
 
-bool	mut_list_init(t_mutex *list, int len)
+bool	mut_list_init(t_data *dat, t_mutex *list)
 {
 	int	i;
 
 	i = 0;
-	while (i < len)
+	while (i < dat->num)
 	{
 		if (pthread_mutex_init(&list[i], NULL) != 0)
 			return (false);
 		i++;
+		dat->count_mut++;
 	}
 	return (true);
 }
@@ -50,14 +51,15 @@ void	mut_list_unlock(t_mutex *list, int len)
 	}
 }
 
-void	mut_list_destroy(t_mutex *list, int len)
+void	mut_list_destroy(t_data *dat, t_mutex *list, int len)
 {
 	int	i;
 
 	i = 0;
-	while (i < len)
+	while (i < len && dat->count_thr > 0)
 	{
 		pthread_mutex_destroy(&list[i]);
 		i++;
+		dat->count_thr--;
 	}
 }

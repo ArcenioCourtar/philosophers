@@ -24,15 +24,21 @@ bool	create_threads(t_data *dat)
 	{
 		args[i].num = i;
 		args[i].dat = dat;
-		pthread_create(&(dat->tid[i]), NULL, routine_philo, &(args[i]));
+		if \
+		(pthread_create(&(dat->tid[i]), NULL, routine_philo, &(args[i])) != 0)
+			return (false);
 		i++;
+		dat->count_thr++;
 	}
-	args[i].dat = dat;
-	pthread_create(&(dat->tid[dat->num]), NULL, routine_reaper, &(args[i]));
+	if \
+	(pthread_create(&(dat->tid[dat->num]), NULL, routine_reap, &(args[0])) != 0)
+		return (false);
+	dat->count_thr++;
+	printf("thread count: %i\n", dat->count_thr);
 	return (true);
 }
 
-// philo threads need to check the if the simulation is still running,
+// philo threads need to check if the simulation is still running,
 // if it's not, they terminate.
 bool	check_simulation_status(t_data *dat)
 {
@@ -42,20 +48,6 @@ bool	check_simulation_status(t_data *dat)
 	status = dat->running;
 	pthread_mutex_unlock(&(dat->mut_running));
 	return (status);
-}
-
-// parent thread waits here until all child threads are done running.
-void	join_threads(t_data *dat)
-{
-	int	i;
-
-	i = 0;
-	while (i < dat->num + 1)
-	{
-		pthread_join(dat->tid[i], NULL);
-		i++;
-	}
-	printf("-----------------------------------\n");
 }
 
 // Get current time and print it.

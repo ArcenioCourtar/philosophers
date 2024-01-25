@@ -53,6 +53,8 @@ typedef struct s_data
 	t_mutex		*mut_eat_num;
 	t_mutex		*mut_eaten;
 	t_mutex		*mut_fork;
+	int			count_mut;
+	int			count_thr;
 }	t_data;
 
 // temporary struct used to pass along info to the threads.
@@ -82,10 +84,10 @@ bool		ret_msg(const char *str, bool ret);
 
 // managing mutex arrays
 
-bool		mut_list_init(t_mutex *list, int len);
+bool		mut_list_init(t_data *dat, t_mutex *list);
 void		mut_list_lock(t_mutex *list, int len);
 void		mut_list_unlock(t_mutex *list, int len);
-void		mut_list_destroy(t_mutex *list, int len);
+void		mut_list_destroy(t_data *dat, t_mutex *list, int len);
 
 // time management
 
@@ -100,8 +102,7 @@ bool		init_struct_mut(t_data *dat);
 
 bool		create_threads(t_data *dat);
 void		*routine_philo(void *args);
-void		*routine_reaper(void *args);
-void		join_threads(t_data *dat);
+void		*routine_reap(void *args);
 bool		check_simulation_status(t_data *dat);
 void		check_eat_times(t_data *dat);
 void		simulation_end(t_data *dat);

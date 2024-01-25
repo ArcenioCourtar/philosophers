@@ -18,11 +18,40 @@ bool	ret_msg(const char *str, bool ret)
 	return (ret);
 }
 
-// free stuff xd
-int	free_ret(t_data *dat)
+void	destroy_mutexes(t_data *dat)
 {
-	// destroy mutexes
-	// join threads
+	if (dat->count_mut > 0)
+	{
+		pthread_mutex_destroy(&(dat->mut_running));
+		dat->count_mut--;
+	}
+	if (dat->count_mut > 0)
+	{
+		pthread_mutex_destroy(&(dat->mut_print));
+		dat->count_mut--;
+	}
+	mut_list_destroy(dat, dat->mut_eaten, dat->num);
+	mut_list_destroy(dat, dat->mut_fork, dat->num);
+	mut_list_destroy(dat, dat->mut_eat_num, dat->num);
+}
+
+void	join_threads(t_data *dat)
+{
+	int	i;
+
+	i = 0;
+	while (i < dat->count_thr)
+	{
+		pthread_join(dat->tid[i], NULL);
+		i++;
+	}
+}
+
+// free stuff xd
+int	cleanup(t_data *dat, int exit_code)
+{
+	join_threads(dat);
+	destroy_mutexes(dat);
 	free(dat->tid);
 	free(dat->time_eaten);
 	free(dat->forks);
@@ -31,7 +60,7 @@ int	free_ret(t_data *dat)
 	free(dat->mut_fork);
 	free(dat->eat_num);
 	free(dat->mut_eat_num);
-	return (0);
+	return (exit_code);
 }
 
 /*
@@ -51,11 +80,10 @@ int	main(int argc, char **argv)
 		return (0);
 	init_struct(&dat);
 	if (!init_struct_malloc(&dat))
-		return (free_ret(&dat));
+		return (cleanup(&dat, 1));
 	if (!init_struct_mut(&dat))
-		return (free_ret(&dat));
+		return (cleanup(&dat, 1));
 	if (!create_threads(&dat))
-		return (free_ret(&dat));
-	join_threads(&dat);
-	return (free_ret(&dat));
+		return (cleanup(&dat, 1));
+	return (cleanup(&dat, 0));
 }

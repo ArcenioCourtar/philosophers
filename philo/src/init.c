@@ -53,32 +53,36 @@ void	set_forks(t_fork *forks, int num)
 	}
 }
 
-// mallocs space for the mutexes, initializes them if malloc succeeds. 
-t_mutex	*malloc_init_mutex(int num)
-{
-	t_mutex	*new;
-
-	new = malloc(sizeof(t_mutex) * num);
-	if (!new)
-		return (NULL);
-	if (!mut_list_init(new, num))
-		return (NULL);
-	return (new);
-}
-
 bool	init_struct_mut(t_data *dat)
 {
 	if (pthread_mutex_init(&(dat->mut_running), NULL) != 0)
 		return (false);
+	dat->count_mut++;
 	if (pthread_mutex_init(&(dat->mut_print), NULL) != 0)
 		return (false);
-	if (!mut_list_init((dat->mut_eaten), dat->num))
+	dat->count_mut++;
+	if (!mut_list_init(dat, (dat->mut_eaten)))
 		return (false);
-	if (!mut_list_init((dat->mut_fork), dat->num))
+	if (!mut_list_init(dat, (dat->mut_fork)))
 		return (false);
 	if (dat->noe != -1)
 	{
-		if (!mut_list_init((dat->mut_eat_num), dat->num))
+		if (!mut_list_init(dat, (dat->mut_eat_num)))
+			return (false);
+	}
+	printf("mutex count: %i\n", (dat->count_mut));
+	return (true);
+}
+
+bool	noe_condition(t_data *dat)
+{
+	if (dat->noe != -1)
+	{
+		dat->eat_num = ft_calloc(dat->num, sizeof(int));
+		if (!(dat->eat_num))
+			return (false);
+		dat->mut_eat_num = malloc(sizeof(t_mutex) * dat->num);
+		if (!(dat->mut_eat_num))
 			return (false);
 	}
 	return (true);
@@ -95,7 +99,7 @@ bool	init_struct_malloc(t_data *dat)
 	dat->forks = malloc(sizeof(t_fork) * dat->num);
 	if (!(dat->forks))
 		return (false);
-	dat->args = malloc(sizeof(t_tmp) * (dat->num + 1));
+	dat->args = malloc(sizeof(t_tmp) * (dat->num));
 	if (!(dat->args))
 		return (false);
 	dat->mut_eaten = malloc(sizeof(t_mutex) * dat->num);
@@ -104,20 +108,13 @@ bool	init_struct_malloc(t_data *dat)
 	dat->mut_fork = malloc(sizeof(t_mutex) * dat->num);
 	if (!(dat->mut_fork))
 		return (false);
-	if (dat->noe != -1)
-	{
-		dat->eat_num = ft_calloc(dat->num, sizeof(int));
-		if (!(dat->eat_num))
-			return (false);
-		dat->mut_eat_num = malloc(sizeof(t_mutex) * dat->num);
-		if (!(dat->mut_eat_num))
-			return (false);
-	}
+	if (!noe_condition(dat))
+		return (false);
 	set_forks(dat->forks, dat->num);
 	return (true);
 }
 
-// initialize struct that hosts all info regarding time and mutexes.
+// initialize values that aren't passed by the user, and not malloc related
 void	init_struct(t_data *dat)
 {
 	dat->running = false;
@@ -129,4 +126,6 @@ void	init_struct(t_data *dat)
 	dat->mut_fork = NULL;
 	dat->eat_num = NULL;
 	dat->mut_eat_num = NULL;
+	dat->count_mut = 0;
+	dat->count_thr = 0;
 }
