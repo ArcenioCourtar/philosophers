@@ -110,5 +110,6 @@ void		simulation_end(t_data *dat);
 // 5 function per file limit. :(
 
 bool		think(t_me *me, t_data *dat);
+void		*ft_calloc(size_t nelem, size_t elsize);
 
 #endif

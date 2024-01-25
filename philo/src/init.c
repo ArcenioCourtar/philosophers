@@ -12,33 +12,6 @@
 
 #include "../include/philo.h"
 
-void	*ft_memset(void *s, int c, size_t n)
-{
-	void			*ptr;
-	unsigned char	c_uchar;
-
-	ptr = s;
-	c_uchar = (unsigned char)c;
-	while (n > 0)
-	{
-		*(unsigned char *)ptr = c_uchar;
-		n--;
-		ptr++;
-	}
-	return (s);
-}
-
-void	*ft_calloc(size_t nelem, size_t elsize)
-{
-	void	*array;
-
-	array = malloc(nelem * elsize);
-	if (array == NULL)
-		return (NULL);
-	ft_memset(array, 0, nelem * elsize);
-	return (array);
-}
-
 // Sets up the correct values for the forks.
 void	set_forks(t_fork *forks, int num)
 {

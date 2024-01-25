@@ -26,7 +26,8 @@ static void	fork_status(t_me *me, t_data *dat, int fork_num, bool fork_side)
 	pthread_mutex_lock(&(dat->mut_fork[fork_num]));
 	if (!dat->forks[fork_num].held && \
 	((dat->forks[fork_num].last == -1 && !(me->num % 2)) \
-	|| (dat->forks[fork_num].last != me->num && dat->forks[fork_num].last != -1)))
+	|| (dat->forks[fork_num].last != me->num \
+	&& dat->forks[fork_num].last != -1)))
 	{
 		dat->forks[fork_num].last = me->num;
 		dat->forks[fork_num].held = true;
