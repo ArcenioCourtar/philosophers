@@ -118,15 +118,16 @@ bool	init_struct_malloc(t_data *dat)
 }
 
 // initialize struct that hosts all info regarding time and mutexes.
-// TODO: shrink it.
 bool	init_struct(t_data *dat)
 {
 	dat->running = false;
-	if (dat->noe != -1)
-	{
-		dat->eat_num = ft_calloc(dat->num, sizeof(int));
-		if (!(dat->eat_num))
-			return (false);
-	}
+	dat->tid = NULL;
+	dat->time_eaten = NULL;
+	dat->uten = NULL;
+	dat->args = NULL;
+	dat->mut_eaten = NULL;
+	dat->mut_uten = NULL;
+	dat->eat_num = NULL;
+	dat->mut_eat_num = NULL;
 	return (true);
 }
