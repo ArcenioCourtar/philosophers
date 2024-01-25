@@ -46,12 +46,12 @@ typedef struct s_data
 	t_mutex		mut_running;
 	t_mutex		mut_print;
 	int			*eat_num;
-	t_mutex		*mut_eat_num;
-	t_mutex		*mut_eaten;
 	t_ullong	*time_eaten;
+	t_uten		*uten;
 	pthread_t	*tid;
 	t_tmp		*args;
-	t_uten		*uten;
+	t_mutex		*mut_eat_num;
+	t_mutex		*mut_eaten;
 	t_mutex		*mut_uten;
 }	t_data;
 
@@ -93,6 +93,8 @@ t_ullong	my_gettime(void);
 void		time_and_print(t_me *me, t_data *dat, \
 const char *txt, t_ullong *ptr_time);
 bool		init_struct(t_data *dat);
+bool		init_struct_malloc(t_data *dat);
+bool		init_struct_mut(t_data *dat);
 
 // thread related functions
 

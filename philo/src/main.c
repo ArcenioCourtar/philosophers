@@ -39,7 +39,10 @@ int	main(int argc, char **argv)
 
 	if (!parse_input(argc, argv, &dat))
 		return (0);
-	if (!init_struct(&dat))
+	init_struct(&dat);
+	if (!init_struct_malloc(&dat))
+		return (free_ret());
+	if (!init_struct_mut(&dat))
 		return (free_ret());
 	if (!create_threads(&dat))
 		return (free_ret());
