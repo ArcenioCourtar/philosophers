@@ -71,6 +71,7 @@ typedef struct s_me
 	int			num;
 	t_ullong	time_eat;
 	bool		held[2];
+	bool		alive;
 }	t_me;
 
 // parsing

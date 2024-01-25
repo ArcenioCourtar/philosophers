@@ -21,7 +21,7 @@
 	they're the last one to have held the forks, if that's that case,
 	the philo will not pick it up.
 */
-static void	fork_status(t_me *me, t_data *dat, int fork_num, bool fork_side)
+static bool	fork_status(t_me *me, t_data *dat, int fork_num, bool fork_side)
 {
 	pthread_mutex_lock(&(dat->mut_fork[fork_num]));
 	if (!dat->forks[fork_num].held && \
@@ -35,11 +35,14 @@ static void	fork_status(t_me *me, t_data *dat, int fork_num, bool fork_side)
 		time_and_print(me, dat, "has taken a fork\n");
 	}
 	pthread_mutex_unlock(&(dat->mut_fork[fork_num]));
+	if (me->alive == false)
+		return (false);
+	return (true);
 }
 
 // Check for available forks. The 'u' value is the index of the adjacent 
 // forks.
-static void	check_forks(t_me *me, t_data *dat)
+static bool	check_forks(t_me *me, t_data *dat)
 {
 	int		u[2];
 
@@ -47,8 +50,11 @@ static void	check_forks(t_me *me, t_data *dat)
 	u[1] = me->num + 1;
 	if (me->num == dat->num - 1)
 		u[1] = 0;
-	fork_status(me, dat, u[0], 0);
-	fork_status(me, dat, u[1], 1);
+	if (fork_status(me, dat, u[0], 0) == false)
+		return (false);
+	if (fork_status(me, dat, u[1], 1) == false)
+		return (false);
+	return (true);
 }
 
 // Philo thinks, while they think they check for forks.
@@ -59,7 +65,8 @@ bool	think(t_me *me, t_data *dat)
 	{
 		if (!check_simulation_status(dat))
 			return (false);
-		check_forks(me, dat);
+		if (!check_forks(me, dat))
+			return (false);
 		if (me->held[0] == true && me->held[1] == true)
 			return (true);
 		usleep(TIME_S);

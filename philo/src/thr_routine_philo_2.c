@@ -57,7 +57,7 @@ static bool	eat(t_me *me, t_data *dat)
 	pthread_mutex_lock(&(dat->mut_eaten[me->num]));
 	dat->time_eaten[me->num] = \
 	time_and_print(me, dat, "is eating\n");
-	if (me->time_eat == dat->time_eaten[me->num])
+	if (me->time_eat == dat->time_eaten[me->num] || me->alive == false)
 	{
 		pthread_mutex_unlock(&(dat->mut_eaten[me->num]));
 		return (false);
@@ -102,6 +102,8 @@ static bool	philo_sleep(t_me *me, t_data *dat)
 
 	time_sleep = my_gettime();
 	time_and_print(me, dat, "is sleeping\n");
+	if (me->alive == false)
+		return (false);
 	while (1)
 	{
 		usleep(TIME_S);

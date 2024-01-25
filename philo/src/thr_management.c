@@ -58,15 +58,17 @@ t_ullong	time_and_print(t_me *me, t_data *dat, const char *txt)
 
 	pthread_mutex_lock(&(dat->mut_print));
 	time = my_gettime();
-	if (!check_simulation_status(dat))
-	{
-		pthread_mutex_unlock(&(dat->mut_print));
-		return (time);
-	}
 	if (time >= dat->time_eaten[me->num] + dat->ttd)
 	{
 		pthread_mutex_unlock(&(dat->mut_print));
-		return (time);
+		me->alive = false;
+		return (0);
+	}
+	if (!check_simulation_status(dat))
+	{
+		pthread_mutex_unlock(&(dat->mut_print));
+		me->alive = false;
+		return (0);
 	}
 	printf("%llu %i %s", time / CONVERT, me->num + 1, txt);
 	pthread_mutex_unlock(&(dat->mut_print));
