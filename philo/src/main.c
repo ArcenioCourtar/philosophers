@@ -21,12 +21,14 @@ bool	ret_msg(const char *str, bool ret)
 // free stuff xd
 int	free_ret(t_data *dat)
 {
+	// destroy mutexes
+	// join threads
 	free(dat->tid);
 	free(dat->time_eaten);
-	free(dat->uten);
+	free(dat->forks);
 	free(dat->args);
 	free(dat->mut_eaten);
-	free(dat->mut_uten);
+	free(dat->mut_fork);
 	free(dat->eat_num);
 	free(dat->mut_eat_num);
 	return (0);

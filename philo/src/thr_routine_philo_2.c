@@ -12,7 +12,7 @@
 
 #include "../include/philo.h"
 
-static void	return_utens(t_me *me, t_data *dat)
+static void	return_forks(t_me *me, t_data *dat)
 {
 	int		u[2];
 
@@ -20,19 +20,19 @@ static void	return_utens(t_me *me, t_data *dat)
 	u[1] = me->num + 1;
 	if (me->num == dat->num - 1)
 		u[1] = 0;
-	pthread_mutex_lock(&(dat->mut_uten[u[0]]));
-	dat->uten[u[0]].held = false;
+	pthread_mutex_lock(&(dat->mut_fork[u[0]]));
+	dat->forks[u[0]].held = false;
 	me->held[0] = false;
-	pthread_mutex_unlock(&(dat->mut_uten[u[0]]));
-	pthread_mutex_lock(&(dat->mut_uten[u[1]]));
-	dat->uten[u[1]].held = false;
+	pthread_mutex_unlock(&(dat->mut_fork[u[0]]));
+	pthread_mutex_lock(&(dat->mut_fork[u[1]]));
+	dat->forks[u[1]].held = false;
 	me->held[1] = false;
-	pthread_mutex_unlock(&(dat->mut_uten[u[1]]));
+	pthread_mutex_unlock(&(dat->mut_fork[u[1]]));
 }
 
 static bool	eat_done(t_me *me, t_data *dat)
 {
-	return_utens(me, dat);
+	return_forks(me, dat);
 	if (dat->noe != -1)
 	{
 		pthread_mutex_lock(&(dat->mut_eat_num[me->num]));
@@ -49,7 +49,7 @@ static bool	eat_done(t_me *me, t_data *dat)
 	"public" time_eaten will be equal to the philo's private value and the 
 	message will not print and the thread terminates.
 	If the philo is not yet dead it will eat, and at the end of it, 
-	return the utensils to the table, and increment the amount it has eaten
+	return the forks to the table, and increment the amount it has eaten
 	if needed.
 */
 static bool	eat(t_me *me, t_data *dat)

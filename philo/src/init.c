@@ -39,16 +39,16 @@ void	*ft_calloc(size_t nelem, size_t elsize)
 	return (array);
 }
 
-// Sets up the correct values for the utensils.
-void	set_uten(t_uten *uten, int num)
+// Sets up the correct values for the forks.
+void	set_forks(t_fork *forks, int num)
 {
 	int	i;
 
 	i = 0;
 	while (i < num)
 	{
-		(uten + i)->last = -1;
-		(uten + i)->held = false;
+		(forks + i)->last = -1;
+		(forks + i)->held = false;
 		i++;
 	}
 }
@@ -74,7 +74,7 @@ bool	init_struct_mut(t_data *dat)
 		return (false);
 	if (!mut_list_init((dat->mut_eaten), dat->num))
 		return (false);
-	if (!mut_list_init((dat->mut_uten), dat->num))
+	if (!mut_list_init((dat->mut_fork), dat->num))
 		return (false);
 	if (dat->noe != -1)
 	{
@@ -92,8 +92,8 @@ bool	init_struct_malloc(t_data *dat)
 	dat->time_eaten = malloc(sizeof(t_ullong) * dat->num);
 	if (!(dat->time_eaten))
 		return (false);
-	dat->uten = malloc(sizeof(t_uten) * dat->num);
-	if (!(dat->uten))
+	dat->forks = malloc(sizeof(t_fork) * dat->num);
+	if (!(dat->forks))
 		return (false);
 	dat->args = malloc(sizeof(t_tmp) * (dat->num + 1));
 	if (!(dat->args))
@@ -101,8 +101,8 @@ bool	init_struct_malloc(t_data *dat)
 	dat->mut_eaten = malloc(sizeof(t_mutex) * dat->num);
 	if (!(dat->mut_eaten))
 		return (false);
-	dat->mut_uten = malloc(sizeof(t_mutex) * dat->num);
-	if (!(dat->mut_uten))
+	dat->mut_fork = malloc(sizeof(t_mutex) * dat->num);
+	if (!(dat->mut_fork))
 		return (false);
 	if (dat->noe != -1)
 	{
@@ -113,21 +113,20 @@ bool	init_struct_malloc(t_data *dat)
 		if (!(dat->mut_eat_num))
 			return (false);
 	}
-	set_uten(dat->uten, dat->num);
+	set_forks(dat->forks, dat->num);
 	return (true);
 }
 
 // initialize struct that hosts all info regarding time and mutexes.
-bool	init_struct(t_data *dat)
+void	init_struct(t_data *dat)
 {
 	dat->running = false;
 	dat->tid = NULL;
 	dat->time_eaten = NULL;
-	dat->uten = NULL;
+	dat->forks = NULL;
 	dat->args = NULL;
 	dat->mut_eaten = NULL;
-	dat->mut_uten = NULL;
+	dat->mut_fork = NULL;
 	dat->eat_num = NULL;
 	dat->mut_eat_num = NULL;
-	return (true);
 }

@@ -27,12 +27,12 @@ typedef pthread_mutex_t		t_mutex;
 typedef struct s_tmp		t_tmp;
 typedef unsigned long long	t_ullong;
 
-// struct to keep track of utensil state.
-typedef struct s_uten
+// struct to keep track of fork state.
+typedef struct s_fork
 {
 	int		last;
 	bool	held;
-}	t_uten;
+}	t_fork;
 
 // main public data structure.
 typedef struct s_data
@@ -47,12 +47,12 @@ typedef struct s_data
 	t_mutex		mut_print;
 	int			*eat_num;
 	t_ullong	*time_eaten;
-	t_uten		*uten;
+	t_fork		*forks;
 	pthread_t	*tid;
 	t_tmp		*args;
 	t_mutex		*mut_eat_num;
 	t_mutex		*mut_eaten;
-	t_mutex		*mut_uten;
+	t_mutex		*mut_fork;
 }	t_data;
 
 // temporary struct used to pass along info to the threads.
@@ -92,7 +92,7 @@ void		mut_list_destroy(t_mutex *list, int len);
 t_ullong	my_gettime(void);
 void		time_and_print(t_me *me, t_data *dat, \
 const char *txt, t_ullong *ptr_time);
-bool		init_struct(t_data *dat);
+void		init_struct(t_data *dat);
 bool		init_struct_malloc(t_data *dat);
 bool		init_struct_mut(t_data *dat);
 
