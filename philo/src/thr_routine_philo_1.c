@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   thr_routine_philo.c                                :+:    :+:            */
+/*   thr_routine_philo_1.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
@@ -40,7 +40,7 @@ static void	wait_start(t_data *dat, int num)
 		if (dat->running == true)
 			break ;
 		pthread_mutex_unlock(&(dat->mut_running));
-		usleep(100);
+		usleep(50);
 	}
 	pthread_mutex_unlock(&(dat->mut_running));
 }
