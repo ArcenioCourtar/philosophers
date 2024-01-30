@@ -39,11 +39,11 @@ void	join_threads(t_data *dat)
 {
 	int	i;
 
-	i = 0;
-	while (i < dat->count_thr)
+	i = dat->count_thr - 1;
+	while (i >= 0)
 	{
 		pthread_join(dat->tid[i], NULL);
-		i++;
+		i--;
 	}
 }
 
