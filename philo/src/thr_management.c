@@ -30,8 +30,7 @@ bool	create_threads(t_data *dat)
 		i++;
 		dat->count_thr++;
 	}
-	if \
-	(pthread_create(&(dat->tid[dat->num]), NULL, routine_reap, &(args[0])) != 0)
+	if (pthread_create(&(dat->tid[i]), NULL, routine_reap, &(args[0])) != 0)
 		return (false);
 	dat->count_thr++;
 	return (true);
