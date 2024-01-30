@@ -81,6 +81,7 @@ int	main(int argc, char **argv)
 	init_struct(&dat);
 	if (!init_struct_malloc(&dat))
 		return (cleanup(&dat, 1));
+	init_after_malloc(&dat);
 	if (!init_struct_mut(&dat))
 		return (cleanup(&dat, 1));
 	if (!create_threads(&dat))

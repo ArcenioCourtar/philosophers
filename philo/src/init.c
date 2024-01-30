@@ -12,20 +12,6 @@
 
 #include "../include/philo.h"
 
-// Sets up the correct values for the forks.
-void	set_forks(t_fork *forks, int num)
-{
-	int	i;
-
-	i = 0;
-	while (i < num)
-	{
-		(forks + i)->last = -1;
-		(forks + i)->held = false;
-		i++;
-	}
-}
-
 bool	init_struct_mut(t_data *dat)
 {
 	if (pthread_mutex_init(&(dat->mut_running), NULL) != 0)
@@ -82,7 +68,6 @@ bool	init_struct_malloc(t_data *dat)
 		return (false);
 	if (!noe_condition(dat))
 		return (false);
-	set_forks(dat->forks, dat->num);
 	return (true);
 }
 

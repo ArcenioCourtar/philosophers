@@ -92,9 +92,13 @@ void		mut_list_destroy(t_data *dat, t_mutex *list, int len);
 
 t_ullong	my_gettime(void);
 t_ullong	time_and_print(t_me *me, t_data *dat, const char *txt);
+
+// setting up the struct before the simulation
+
 void		init_struct(t_data *dat);
 bool		init_struct_malloc(t_data *dat);
 bool		init_struct_mut(t_data *dat);
+void		init_after_malloc(t_data *dat);
 
 // thread related functions
 
