@@ -34,7 +34,6 @@ bool	create_threads(t_data *dat)
 	(pthread_create(&(dat->tid[dat->num]), NULL, routine_reap, &(args[0])) != 0)
 		return (false);
 	dat->count_thr++;
-	printf("thread count: %i\n", dat->count_thr);
 	return (true);
 }
 

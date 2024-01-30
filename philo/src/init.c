@@ -43,7 +43,6 @@ bool	init_struct_mut(t_data *dat)
 		if (!mut_list_init(dat, (dat->mut_eat_num)))
 			return (false);
 	}
-	printf("mutex count: %i\n", (dat->count_mut));
 	return (true);
 }
 

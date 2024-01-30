@@ -29,14 +29,17 @@ static bool	fork_status(t_me *me, t_data *dat, int fork_num, bool fork_side)
 	|| (dat->forks[fork_num].last != me->num \
 	&& dat->forks[fork_num].last != -1)))
 	{
+		time_and_print(me, dat, "has taken a fork\n");
+		if (me->alive == false)
+		{
+			pthread_mutex_unlock(&(dat->mut_fork[fork_num]));
+			return (false);
+		}
 		dat->forks[fork_num].last = me->num;
 		dat->forks[fork_num].held = true;
 		me->held[fork_side] = true;
-		time_and_print(me, dat, "has taken a fork\n");
 	}
 	pthread_mutex_unlock(&(dat->mut_fork[fork_num]));
-	if (me->alive == false)
-		return (false);
 	return (true);
 }
 
@@ -77,6 +80,8 @@ Philo thinks, while they think they check for forks.*/
 bool	think(t_me *me, t_data *dat)
 {
 	time_and_print(me, dat, "is thinking\n");
+	if (me->alive == false)
+		return (false);
 	while (1)
 	{
 		if (!check_simulation_status(dat))
