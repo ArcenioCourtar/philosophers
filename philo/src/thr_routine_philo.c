@@ -29,8 +29,11 @@ void	init_philo(t_tmp *args, t_me *me, t_data **dat)
 }
 
 // Busy wait until the reaper thread has started and changes this flag.
-static void	wait_start(t_data *dat)
+static void	wait_start(t_data *dat, int num)
 {
+	pthread_mutex_lock(&(dat->mut_time_eaten[num]));
+	dat->time_eaten[num] = 0;
+	pthread_mutex_unlock(&(dat->mut_time_eaten[num]));
 	while (1)
 	{
 		pthread_mutex_lock(&(dat->mut_running));
@@ -51,7 +54,7 @@ void	*routine_philo(void *args)
 	t_data	*dat;
 
 	init_philo(args, &me, &dat);
-	wait_start(dat);
+	wait_start(dat, me.num);
 	philo_main(&me, dat);
 	return (NULL);
 }

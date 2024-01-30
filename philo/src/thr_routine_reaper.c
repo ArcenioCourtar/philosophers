@@ -12,19 +12,35 @@
 
 #include "../include/philo.h"
 
-// start simulation, all philo threads wait before this section is executed.
-// set all time_eaten values to 0 (start of the simulation).
-void	start_simulation(t_data *dat)
+// Checks if all philo threads have initialized
+bool	check_philo_thread_init(t_data *dat)
 {
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&(dat->mut_running));
 	while (i < dat->num)
 	{
-		dat->time_eaten[i] = 0;
+		pthread_mutex_lock(&(dat->mut_time_eaten[i]));
+		if (dat->time_eaten[i] == 1)
+		{
+			pthread_mutex_unlock(&(dat->mut_time_eaten[i]));
+			return (false);
+		}
+		pthread_mutex_unlock(&(dat->mut_time_eaten[i]));
 		i++;
 	}
+	return (true);
+}
+
+// Start simulation, when all philo threads are ready
+void	start_simulation(t_data *dat)
+{
+	while (1)
+	{
+		if (check_philo_thread_init(dat))
+			break ;
+	}
+	pthread_mutex_lock(&(dat->mut_running));
 	dat->running = true;
 	my_gettime();
 	pthread_mutex_unlock(&(dat->mut_running));
