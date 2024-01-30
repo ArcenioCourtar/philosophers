@@ -34,7 +34,7 @@ bool	init_struct_mut(t_data *dat)
 	if (pthread_mutex_init(&(dat->mut_print), NULL) != 0)
 		return (false);
 	dat->count_mut++;
-	if (!mut_list_init(dat, (dat->mut_eaten)))
+	if (!mut_list_init(dat, (dat->mut_time_eaten)))
 		return (false);
 	if (!mut_list_init(dat, (dat->mut_fork)))
 		return (false);
@@ -74,8 +74,8 @@ bool	init_struct_malloc(t_data *dat)
 	dat->args = malloc(sizeof(t_tmp) * (dat->num));
 	if (!(dat->args))
 		return (false);
-	dat->mut_eaten = malloc(sizeof(t_mutex) * dat->num);
-	if (!(dat->mut_eaten))
+	dat->mut_time_eaten = malloc(sizeof(t_mutex) * dat->num);
+	if (!(dat->mut_time_eaten))
 		return (false);
 	dat->mut_fork = malloc(sizeof(t_mutex) * dat->num);
 	if (!(dat->mut_fork))
@@ -94,7 +94,7 @@ void	init_struct(t_data *dat)
 	dat->time_eaten = NULL;
 	dat->forks = NULL;
 	dat->args = NULL;
-	dat->mut_eaten = NULL;
+	dat->mut_time_eaten = NULL;
 	dat->mut_fork = NULL;
 	dat->eat_num = NULL;
 	dat->mut_eat_num = NULL;

@@ -30,7 +30,7 @@ static bool	death_check(t_data *dat, int i)
 {
 	t_ullong	time_curr;
 
-	pthread_mutex_lock(&(dat->mut_eaten[i]));
+	pthread_mutex_lock(&(dat->mut_time_eaten[i]));
 	time_curr = my_gettime();
 	if (time_curr >= (dat->time_eaten[i] + dat->ttd))
 	{
@@ -38,10 +38,10 @@ static bool	death_check(t_data *dat, int i)
 		simulation_end(dat);
 		printf("%llu %i died\n", time_curr / CONVERT, i);
 		pthread_mutex_unlock(&(dat->mut_print));
-		pthread_mutex_unlock(&(dat->mut_eaten[i]));
+		pthread_mutex_unlock(&(dat->mut_time_eaten[i]));
 		return (true);
 	}
-	pthread_mutex_unlock(&(dat->mut_eaten[i]));
+	pthread_mutex_unlock(&(dat->mut_time_eaten[i]));
 	return (false);
 }
 

@@ -54,15 +54,15 @@ static bool	eat_done(t_me *me, t_data *dat)
 */
 static bool	eat(t_me *me, t_data *dat)
 {
-	pthread_mutex_lock(&(dat->mut_eaten[me->num]));
+	pthread_mutex_lock(&(dat->mut_time_eaten[me->num]));
 	dat->time_eaten[me->num] = time_and_print(me, dat, "is eating\n");
 	if (me->alive == false)
 	{
-		pthread_mutex_unlock(&(dat->mut_eaten[me->num]));
+		pthread_mutex_unlock(&(dat->mut_time_eaten[me->num]));
 		return (false);
 	}
 	me->time_eat = dat->time_eaten[me->num];
-	pthread_mutex_unlock(&(dat->mut_eaten[me->num]));
+	pthread_mutex_unlock(&(dat->mut_time_eaten[me->num]));
 	while (1)
 	{
 		usleep(TIME_S);

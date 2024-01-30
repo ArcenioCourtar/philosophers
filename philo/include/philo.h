@@ -51,7 +51,7 @@ typedef struct s_data
 	pthread_t	*tid;
 	t_tmp		*args;
 	t_mutex		*mut_eat_num;
-	t_mutex		*mut_eaten;
+	t_mutex		*mut_time_eaten;
 	t_mutex		*mut_fork;
 	int			count_mut;
 	int			count_thr;

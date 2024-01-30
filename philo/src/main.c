@@ -30,7 +30,7 @@ void	destroy_mutexes(t_data *dat)
 		pthread_mutex_destroy(&(dat->mut_print));
 		dat->count_mut--;
 	}
-	mut_list_destroy(dat, dat->mut_eaten, dat->num);
+	mut_list_destroy(dat, dat->mut_time_eaten, dat->num);
 	mut_list_destroy(dat, dat->mut_fork, dat->num);
 	mut_list_destroy(dat, dat->mut_eat_num, dat->num);
 }
@@ -56,7 +56,7 @@ int	cleanup(t_data *dat, int exit_code)
 	free(dat->time_eaten);
 	free(dat->forks);
 	free(dat->args);
-	free(dat->mut_eaten);
+	free(dat->mut_time_eaten);
 	free(dat->mut_fork);
 	free(dat->eat_num);
 	free(dat->mut_eat_num);
