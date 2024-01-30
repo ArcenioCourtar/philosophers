@@ -20,6 +20,8 @@ static bool	all_nums(const char *str)
 
 	i = 0;
 	len = ft_strlen(str);
+	if (len > 10)
+		return (false);
 	while (i < len)
 	{
 		if (!ft_isdigit(str[i]))
@@ -34,19 +36,19 @@ static bool	assign_mandatory(char **argv, t_data *dat)
 	t_ullong	tmp;
 
 	tmp = ft_atol(argv[1]);
-	if (tmp > INT_MAX || tmp == 0)
+	if (tmp > 1000 || tmp == 0)
 		return (false);
 	dat->num = tmp;
 	tmp = ft_atol(argv[2]);
-	if (tmp > INT_MAX)
+	if (tmp > INT_MAX || tmp == 0)
 		return (false);
 	dat->ttd = tmp * 1000;
 	tmp = ft_atol(argv[3]);
-	if (tmp > INT_MAX)
+	if (tmp > INT_MAX || tmp == 0)
 		return (false);
 	dat->tte = tmp * 1000;
 	tmp = ft_atol(argv[4]);
-	if (tmp > INT_MAX)
+	if (tmp > INT_MAX || tmp == 0)
 		return (false);
 	dat->tts = tmp * 1000;
 	return (true);
