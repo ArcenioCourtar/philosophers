@@ -51,14 +51,13 @@ bool	check_simulation_status(t_data *dat)
 }
 
 // Get current time and print it.
-// Optional 4th arg to assign the current time to an additional place.
 t_ullong	time_and_print(t_me *me, t_data *dat, const char *txt)
 {
 	t_ullong	time;
 
 	pthread_mutex_lock(&(dat->mut_print));
 	time = my_gettime();
-	if (time >= dat->time_eaten[me->num] + dat->ttd)
+	if (time >= me->time_eat + dat->ttd)
 	{
 		pthread_mutex_unlock(&(dat->mut_print));
 		me->alive = false;
