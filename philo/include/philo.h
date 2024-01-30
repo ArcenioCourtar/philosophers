@@ -86,8 +86,6 @@ bool		ret_msg(const char *str, bool ret);
 // managing mutex arrays
 
 bool		mut_list_init(t_data *dat, t_mutex *list);
-void		mut_list_lock(t_mutex *list, int len);
-void		mut_list_unlock(t_mutex *list, int len);
 void		mut_list_destroy(t_data *dat, t_mutex *list, int len);
 
 // time management
