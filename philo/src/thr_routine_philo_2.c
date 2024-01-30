@@ -44,10 +44,6 @@ static bool	eat_done(t_me *me, t_data *dat)
 
 /*
 	Philo starts eating.
-	The time_and_print() function has an additional check that makes sure
-	an already-dead philo does not start eating. If that's the case the
-	"public" time_eaten will be equal to the philo's private value and the 
-	message will not print and the thread terminates.
 	If the philo is not yet dead it will eat, and at the end of it, 
 	return the forks to the table, and increment the amount it has eaten
 	if needed.

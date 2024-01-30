@@ -40,7 +40,7 @@ static void	wait_start(t_data *dat, int num)
 		if (dat->running == true)
 			break ;
 		pthread_mutex_unlock(&(dat->mut_running));
-		usleep(50);
+		usleep(100);
 	}
 	pthread_mutex_unlock(&(dat->mut_running));
 }
@@ -54,6 +54,6 @@ void	*routine_philo(void *args)
 
 	init_philo(args, &me, &dat);
 	wait_start(dat, me.num);
-	// philo_main(&me, dat);
+	philo_main(&me, dat);
 	return (NULL);
 }
