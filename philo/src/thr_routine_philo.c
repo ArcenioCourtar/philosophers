@@ -38,16 +38,15 @@ static void	wait_start(t_data *dat, int num)
 	{
 		pthread_mutex_lock(&(dat->mut_running));
 		if (dat->running == true)
-		{
-			pthread_mutex_unlock(&(dat->mut_running));
 			break ;
-		}
 		pthread_mutex_unlock(&(dat->mut_running));
+		usleep(50);
 	}
+	pthread_mutex_unlock(&(dat->mut_running));
 }
 
 // philo routine.
-// initialize struct, wait for reaper thread to say go, perform simulation.
+// Initialize struct, wait for reaper thread to say go, perform simulation.
 void	*routine_philo(void *args)
 {
 	t_me	me;
@@ -55,6 +54,6 @@ void	*routine_philo(void *args)
 
 	init_philo(args, &me, &dat);
 	wait_start(dat, me.num);
-	philo_main(&me, dat);
+	// philo_main(&me, dat);
 	return (NULL);
 }

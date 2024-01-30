@@ -70,6 +70,6 @@ void	*routine_reap(void *args)
 
 	dat = init_reaper(args);
 	start_simulation(dat);
-	check_eat_times(dat);
+	// check_eat_times(dat);
 	return (NULL);
 }
