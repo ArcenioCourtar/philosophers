@@ -17,9 +17,6 @@ bool	init_struct_mut(t_data *dat)
 	if (pthread_mutex_init(&(dat->mut_running), NULL) != 0)
 		return (false);
 	dat->count_mut++;
-	if (pthread_mutex_init(&(dat->mut_ready), NULL) != 0)
-		return (false);
-	dat->count_mut++;
 	if (pthread_mutex_init(&(dat->mut_print), NULL) != 0)
 		return (false);
 	dat->count_mut++;
@@ -78,7 +75,6 @@ bool	init_struct_malloc(t_data *dat)
 void	init_struct(t_data *dat)
 {
 	dat->running = false;
-	dat->ready = false;
 	dat->tid = NULL;
 	dat->time_eaten = NULL;
 	dat->forks = NULL;
