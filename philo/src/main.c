@@ -27,6 +27,11 @@ void	destroy_mutexes(t_data *dat)
 	}
 	if (dat->count_mut > 0)
 	{
+		pthread_mutex_destroy(&(dat->mut_ready));
+		dat->count_mut--;
+	}
+	if (dat->count_mut > 0)
+	{
 		pthread_mutex_destroy(&(dat->mut_print));
 		dat->count_mut--;
 	}

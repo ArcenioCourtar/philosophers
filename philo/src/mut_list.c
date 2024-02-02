@@ -32,10 +32,10 @@ void	mut_list_destroy(t_data *dat, t_mutex *list, int len)
 	int	i;
 
 	i = 0;
-	while (i < len && dat->count_thr > 0)
+	while (i < len && dat->count_mut > 0)
 	{
 		pthread_mutex_destroy(&list[i]);
 		i++;
-		dat->count_thr--;
+		dat->count_mut--;
 	}
 }

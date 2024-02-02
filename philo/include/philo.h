@@ -43,7 +43,9 @@ typedef struct s_data
 	t_ullong	tts;
 	int			noe;
 	bool		running;
+	bool		ready;
 	t_mutex		mut_running;
+	t_mutex		mut_ready;
 	t_mutex		mut_print;
 	int			*eat_num;
 	t_ullong	*time_eaten;
