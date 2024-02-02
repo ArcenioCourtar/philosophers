@@ -40,15 +40,15 @@ static bool	assign_mandatory(char **argv, t_data *dat)
 		return (false);
 	dat->num = tmp;
 	tmp = ft_atol(argv[2]);
-	if (tmp > INT_MAX || tmp == 0)
+	if (tmp > INT_MAX)
 		return (false);
 	dat->ttd = tmp * 1000;
 	tmp = ft_atol(argv[3]);
-	if (tmp > INT_MAX || tmp == 0)
+	if (tmp > INT_MAX)
 		return (false);
 	dat->tte = tmp * 1000;
 	tmp = ft_atol(argv[4]);
-	if (tmp > INT_MAX || tmp == 0)
+	if (tmp > INT_MAX)
 		return (false);
 	dat->tts = tmp * 1000;
 	return (true);
@@ -64,7 +64,7 @@ static bool	assign_num(int argc, char **argv, t_data *dat)
 	if (argc == 6)
 	{
 		tmp = ft_atol(argv[5]);
-		if (tmp > INT_MAX || tmp == 0)
+		if (tmp > INT_MAX)
 			return (false);
 		dat->noe = tmp;
 	}
