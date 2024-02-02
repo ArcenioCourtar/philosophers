@@ -24,7 +24,7 @@ void	init_philo(t_tmp *args, t_me *me, t_data **dat)
 	me->num = args->num;
 	me->held[0] = false;
 	me->held[1] = false;
-	me->time_eat = 0;
+	me->time_eaten = 0;
 	me->alive = true;
 }
 
