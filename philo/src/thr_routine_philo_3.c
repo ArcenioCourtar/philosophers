@@ -84,7 +84,7 @@ bool	think(t_me *me, t_data *dat)
 		return (false);
 	while (1)
 	{
-		if (!check_simulation_status(dat))
+		if (check_simulation_status(dat) != 1)
 			return (false);
 		if (!check_forks(me, dat))
 			return (false);

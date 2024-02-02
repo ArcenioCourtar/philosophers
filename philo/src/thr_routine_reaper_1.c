@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   thr_routine_reaper.c                               :+:    :+:            */
+/*   thr_routine_reaper_1.c                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: acourtar <acourtar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
@@ -41,7 +41,7 @@ void	start_simulation(t_data *dat)
 			break ;
 	}
 	pthread_mutex_lock(&(dat->mut_running));
-	dat->running = true;
+	dat->running = 1;
 	my_gettime();
 	pthread_mutex_unlock(&(dat->mut_running));
 }
@@ -51,7 +51,7 @@ void	start_simulation(t_data *dat)
 void	simulation_end(t_data *dat)
 {
 	pthread_mutex_lock(&(dat->mut_running));
-	dat->running = false;
+	dat->running = 2;
 	pthread_mutex_unlock(&(dat->mut_running));
 }
 

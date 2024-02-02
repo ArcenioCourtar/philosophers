@@ -42,7 +42,7 @@ typedef struct s_data
 	t_ullong	tte;
 	t_ullong	tts;
 	int			noe;
-	bool		running;
+	int			running;
 	t_mutex		mut_running;
 	t_mutex		mut_print;
 	int			*eat_num;
@@ -105,7 +105,7 @@ void		init_after_malloc(t_data *dat);
 bool		create_threads(t_data *dat);
 void		*routine_philo(void *args);
 void		*routine_reap(void *args);
-bool		check_simulation_status(t_data *dat);
+int			check_simulation_status(t_data *dat);
 void		check_eat_times(t_data *dat);
 void		simulation_end(t_data *dat);
 

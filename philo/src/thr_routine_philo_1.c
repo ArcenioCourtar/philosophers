@@ -34,10 +34,10 @@ static void	wait_start(t_data *dat, int num)
 	while (1)
 	{
 		pthread_mutex_lock(&(dat->mut_running));
-		if (dat->running == true)
+		if (dat->running != 0)
 			break ;
 		pthread_mutex_unlock(&(dat->mut_running));
-		usleep(50);
+		usleep(100);
 	}
 	pthread_mutex_unlock(&(dat->mut_running));
 }

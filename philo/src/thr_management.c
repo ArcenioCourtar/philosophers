@@ -38,9 +38,9 @@ bool	create_threads(t_data *dat)
 
 // philo threads need to check if the simulation is still running,
 // if it's not, they terminate.
-bool	check_simulation_status(t_data *dat)
+int	check_simulation_status(t_data *dat)
 {
-	bool	status;
+	int	status;
 
 	pthread_mutex_lock(&(dat->mut_running));
 	status = dat->running;
@@ -61,7 +61,7 @@ t_ullong	time_and_print(t_me *me, t_data *dat, const char *txt)
 		me->alive = false;
 		return (0);
 	}
-	if (!check_simulation_status(dat))
+	if (check_simulation_status(dat) != 1)
 	{
 		pthread_mutex_unlock(&(dat->mut_print));
 		me->alive = false;
