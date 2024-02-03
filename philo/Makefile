@@ -56,4 +56,8 @@ sanadd: $(ALL_OBJ)
 santhr: $(ALL_OBJ)
 	$(CC) -g $(CFLAGS) $(ALL_OBJ) -pthread -fsanitize=thread -o $(NAME)
 
+helg: $(ALL_OBJ)
+	$(CC) -g $(CFLAGS) $(ALL_OBJ) -pthread -o $(NAME) && \
+	valgrind --tool=helgrind ./philo 20 300 100 100 10
+
 .PHONY: clean fclean re all
