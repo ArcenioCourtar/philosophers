@@ -36,10 +36,31 @@ static void	destroy_mutexes(t_data *dat)
 	mut_list_destroy(dat, dat->mut_eat_num);
 }
 
+// in case an error occured during the creation of threads, the reaper
+// will not be there to say "go".
+// ensure the threads that are created actually finish their routine so
+// they can be joined.
 static void	join_threads(t_data *dat)
 {
 	int	i;
 
+	if (dat->thr_error == true)
+	{
+		i = 0;
+		while (i < dat->count_thr)
+		{
+			pthread_mutex_lock(&(dat->mut_ready[i]));
+			i++;
+		}
+		dat->running = false;
+		dat->ready = true;
+		i = 0;
+		while (i < dat->count_thr)
+		{
+			pthread_mutex_unlock(&(dat->mut_ready[i]));
+			i++;
+		}
+	}
 	i = 0;
 	while (i < dat->count_thr)
 	{

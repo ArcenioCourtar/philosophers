@@ -58,6 +58,7 @@ typedef struct s_data
 	t_mutex		*mut_fork;
 	int			count_mut;
 	int			count_thr;
+	bool		thr_error;
 }	t_data;
 
 // temporary struct used to pass along info to the threads.

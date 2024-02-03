@@ -32,6 +32,9 @@ int	main(int argc, char **argv)
 	if (!init_struct_mut(&dat))
 		return (cleanup(&dat, 1));
 	if (!create_threads(&dat))
+	{
+		dat.thr_error = true;
 		return (cleanup(&dat, 1));
+	}
 	return (cleanup(&dat, 0));
 }

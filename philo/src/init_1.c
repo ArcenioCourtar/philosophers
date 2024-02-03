@@ -100,4 +100,5 @@ void	init_struct(t_data *dat)
 	dat->mut_eat_num = NULL;
 	dat->count_mut = 0;
 	dat->count_thr = 0;
+	dat->thr_error = false;
 }
