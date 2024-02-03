@@ -13,6 +13,7 @@
 #include "../include/philo.h"
 
 // Create all threads.
+// If a thread fails to initialize for some reason return false.
 bool	create_threads(t_data *dat)
 {
 	t_tmp	*args;
@@ -48,7 +49,7 @@ int	check_simulation_status(t_data *dat)
 	return (status);
 }
 
-// Get current time and print it.
+// philo gets the curret time and prints it. Unless they're supposed to be dead
 t_ullong	time_and_print(t_me *me, t_data *dat, const char *txt)
 {
 	t_ullong	time;

@@ -12,9 +12,18 @@
 
 #include "../include/philo.h"
 
+// Function called if the simulation needs to end because a philo died or they
+// ate enough.
+static void	simulation_end(t_data *dat)
+{
+	pthread_mutex_lock(&(dat->mut_running));
+	dat->running = 2;
+	pthread_mutex_unlock(&(dat->mut_running));
+}
+
 // If the amount of times they need to eat is specified, check the amount of
 // times each philo has eaten.
-void	check_eat_num(t_data *dat, int num, int *lowest_eat)
+static void	check_eat_num(t_data *dat, int num, int *lowest_eat)
 {
 	if (dat->noe == -1)
 		return ;

@@ -13,7 +13,9 @@
 CC			= cc
 NAME		= philo
 CFLAGS		= -Wall -Werror -Wextra
-SRCFILES	= main.c time.c thr_management.c ft_calloc.c mut_list.c \
+SRCFILES	= \
+			main.c time.c thr_management.c \
+			ft_calloc.c mut_list.c cleanup.c \
 			parsing_1.c parsing_2.c \
 			init_1.c init_2.c \
 			thr_routine_philo_1.c thr_routine_philo_2.c thr_routine_philo_3.c \

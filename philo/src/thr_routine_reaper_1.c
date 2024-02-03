@@ -13,7 +13,7 @@
 #include "../include/philo.h"
 
 // Checks if all philo threads have initialized
-bool	check_philo_thread_init(t_data *dat)
+static bool	check_philo_thread_init(t_data *dat)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ bool	check_philo_thread_init(t_data *dat)
 }
 
 // Start simulation, when all philo threads are ready
-void	start_simulation(t_data *dat)
+static void	start_simulation(t_data *dat)
 {
 	while (1)
 	{
@@ -46,21 +46,10 @@ void	start_simulation(t_data *dat)
 	pthread_mutex_unlock(&(dat->mut_running));
 }
 
-// Function called if the simulation needs to end because a philo died or they
-// ate enough.
-void	simulation_end(t_data *dat)
+// The reaper awakens
+static t_data	*init_reaper(t_tmp *args)
 {
-	pthread_mutex_lock(&(dat->mut_running));
-	dat->running = 2;
-	pthread_mutex_unlock(&(dat->mut_running));
-}
-
-t_data	*init_reaper(t_tmp *args)
-{
-	t_data	*dat;
-
-	dat = args->dat;
-	return (dat);
+	return (args->dat);
 }
 
 // Checks if any philos are supposed to be dead, every 100 microseconds.

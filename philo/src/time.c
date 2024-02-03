@@ -12,12 +12,18 @@
 
 #include "../include/philo.h"
 
-// Instead of using the terrible timeval struct,
-// convert the seconds to microseconds, add them up, and store it in an
-// unsigned 64 bit int.
-// During the first call, before the philosophers run, set the start time.
-// After that subtract the start time, from the current time, to get the 
-// time elapsed since the start of the simulation.
+/*
+Instead of using the terrible timeval struct,
+convert the seconds to microseconds, add them up, and store it in an
+unsigned long long.
+The reaper thread will call this function first, before any other threads
+can. The other threads are locked behind a boolean which only changes
+after the reaper thread is done with this.
+During the first call the starting time is set by storing the return of
+gettimeofday()
+Each subsequent call will compare the difference between that first call and
+the current one to return the current simulation time
+*/
 t_ullong	my_gettime(t_data *dat)
 {
 	struct timeval	newtime;

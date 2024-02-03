@@ -13,7 +13,11 @@
 #include "../include/philo.h"
 
 // Sets up the correct values for the forks.
-void	set_forks(t_fork *forks, int num)
+// philos track if they've held the fork last and will not pick it up
+// if that's the case.
+// Initial last value is set to -1 so only even-numbered philos pick it up
+// when the simulation starts.
+static void	set_forks(t_fork *forks, int num)
 {
 	int	i;
 
@@ -26,7 +30,9 @@ void	set_forks(t_fork *forks, int num)
 	}
 }
 
-void	set_time_eaten(t_data *dat)
+// Set time_eaten to 1 until all threads have intialized, which will all
+// set their personal time_eaten to 0 to signify being ready
+static void	set_time_eaten(t_data *dat)
 {
 	int	i;
 
@@ -38,6 +44,8 @@ void	set_time_eaten(t_data *dat)
 	}
 }
 
+// Separate function to split up the actual mallocs and doing something with
+// that memory.
 void	init_after_malloc(t_data *dat)
 {
 	set_forks(dat->forks, dat->num);

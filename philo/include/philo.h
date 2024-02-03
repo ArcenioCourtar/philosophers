@@ -66,7 +66,7 @@ typedef struct s_tmp
 }	t_tmp;
 
 // private struct for each philo
-// tracks time they last ate, and if they're holding forks
+// tracks time they last ate, the held forks, and if they should be alive
 typedef struct s_me
 {
 	int			num;
@@ -75,19 +75,22 @@ typedef struct s_me
 	bool		alive;
 }	t_me;
 
+// wow it's calloc
+
+void		*ft_calloc(size_t nelem, size_t elsize);
+
 // parsing
 
 bool		parse_input(int argc, char **argv, t_data *dat);
 int			ft_isdigit(int c);
-size_t		ft_strlen(const char *s);
 int			ft_isspace(int c);
 long		ft_atol(const char *str);
-bool		ret_msg(const char *str, bool ret);
+size_t		ft_strlen(const char *s);
 
 // managing mutex arrays
 
-bool		mut_list_init(t_data *dat, t_mutex *list);
 void		mut_list_destroy(t_data *dat, t_mutex *list, int len);
+bool		mut_list_init(t_data *dat, t_mutex *list);
 
 // time management
 
@@ -97,22 +100,31 @@ t_ullong	time_and_print(t_me *me, t_data *dat, const char *txt);
 // setting up the struct before the simulation
 
 void		init_struct(t_data *dat);
+void		init_after_malloc(t_data *dat);
 bool		init_struct_malloc(t_data *dat);
 bool		init_struct_mut(t_data *dat);
-void		init_after_malloc(t_data *dat);
+
+// thread routines
+
+void		*routine_philo(void *args);
+void		*routine_reap(void *args);
 
 // thread related functions
 
-bool		create_threads(t_data *dat);
-void		*routine_philo(void *args);
-void		*routine_reap(void *args);
-int			check_simulation_status(t_data *dat);
 void		check_eat_times(t_data *dat);
-void		simulation_end(t_data *dat);
+bool		create_threads(t_data *dat);
+int			check_simulation_status(t_data *dat);
+
+// cleanup
+
+void		destroy_mutexes(t_data *dat);
+void		join_threads(t_data *dat);
+int			cleanup(t_data *dat, int exit_code);
+bool		ret_msg(const char *str, bool ret);
 
 // 5 function per file limit. :(
 
 bool		think(t_me *me, t_data *dat);
-void		*ft_calloc(size_t nelem, size_t elsize);
+void		philo_main(t_me *me, t_data *dat);
 
 #endif

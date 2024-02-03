@@ -12,6 +12,24 @@
 
 #include "../include/philo.h"
 
+// If the number_of_times_to_eat is set then allocate additional memory for
+// those values and the corresponding mutexes
+static bool	noe_condition(t_data *dat)
+{
+	if (dat->noe != -1)
+	{
+		dat->eat_num = ft_calloc(dat->num, sizeof(int));
+		if (!(dat->eat_num))
+			return (false);
+		dat->mut_eat_num = malloc(sizeof(t_mutex) * dat->num);
+		if (!(dat->mut_eat_num))
+			return (false);
+	}
+	return (true);
+}
+
+// initialize all mutexes
+// in case of a mutex not initializing return false
 bool	init_struct_mut(t_data *dat)
 {
 	if (pthread_mutex_init(&(dat->mut_running), NULL) != 0)
@@ -32,20 +50,9 @@ bool	init_struct_mut(t_data *dat)
 	return (true);
 }
 
-bool	noe_condition(t_data *dat)
-{
-	if (dat->noe != -1)
-	{
-		dat->eat_num = ft_calloc(dat->num, sizeof(int));
-		if (!(dat->eat_num))
-			return (false);
-		dat->mut_eat_num = malloc(sizeof(t_mutex) * dat->num);
-		if (!(dat->mut_eat_num))
-			return (false);
-	}
-	return (true);
-}
-
+// allocate all necessary memory for:
+// thread tids, time eaten, forks, mutexes, etc.
+// in case of malloc failure return false
 bool	init_struct_malloc(t_data *dat)
 {
 	dat->tid = malloc(sizeof(pthread_t) * (dat->num + 1));
