@@ -18,7 +18,7 @@ bool	ret_msg(const char *str, bool ret)
 	return (ret);
 }
 
-void	destroy_mutexes(t_data *dat)
+static void	destroy_mutexes(t_data *dat)
 {
 	if (dat->count_mut > 0)
 	{
@@ -36,7 +36,7 @@ void	destroy_mutexes(t_data *dat)
 	mut_list_destroy(dat, dat->mut_eat_num, dat->num);
 }
 
-void	join_threads(t_data *dat)
+static void	join_threads(t_data *dat)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ void	join_threads(t_data *dat)
 	}
 }
 
-// free stuff xd
+// join threads, destroy mutexes, and free memory wherever necessary
 int	cleanup(t_data *dat, int exit_code)
 {
 	join_threads(dat);

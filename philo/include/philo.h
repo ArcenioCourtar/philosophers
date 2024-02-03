@@ -119,8 +119,6 @@ bool		check_simulation_status(t_data *dat);
 
 // cleanup
 
-void		destroy_mutexes(t_data *dat);
-void		join_threads(t_data *dat);
 int			cleanup(t_data *dat, int exit_code);
 bool		ret_msg(const char *str, bool ret);
 
