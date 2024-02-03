@@ -43,7 +43,8 @@ typedef struct s_data
 	t_ullong	tts;
 	int			noe;
 	t_ullong	start_time;
-	int			running;
+	bool		running;
+	bool		ready;
 	t_mutex		mut_running;
 	t_mutex		mut_print;
 	int			*eat_num;
@@ -51,6 +52,7 @@ typedef struct s_data
 	t_fork		*forks;
 	pthread_t	*tid;
 	t_tmp		*args;
+	t_mutex		*mut_ready;
 	t_mutex		*mut_eat_num;
 	t_mutex		*mut_time_eaten;
 	t_mutex		*mut_fork;
@@ -113,7 +115,7 @@ void		*routine_reap(void *args);
 
 void		check_eat_times(t_data *dat);
 bool		create_threads(t_data *dat);
-int			check_simulation_status(t_data *dat);
+bool		check_simulation_status(t_data *dat);
 
 // cleanup
 

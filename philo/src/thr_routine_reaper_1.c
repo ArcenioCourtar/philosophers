@@ -35,15 +35,28 @@ static bool	check_philo_thread_init(t_data *dat)
 // Start simulation, when all philo threads are ready
 static void	start_simulation(t_data *dat)
 {
+	int	i;
+
 	while (1)
 	{
 		if (check_philo_thread_init(dat))
 			break ;
 	}
-	pthread_mutex_lock(&(dat->mut_running));
-	dat->running = 1;
+	i = 0;
+	while (i < dat->num)
+	{
+		pthread_mutex_lock(&(dat->mut_ready[i]));
+		i++;
+	}
+	dat->running = true;
+	dat->ready = true;
 	my_gettime(dat);
-	pthread_mutex_unlock(&(dat->mut_running));
+	i = 0;
+	while (i < dat->num)
+	{
+		pthread_mutex_unlock(&(dat->mut_ready[i]));
+		i++;
+	}
 }
 
 // The reaper awakens

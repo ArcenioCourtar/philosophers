@@ -31,13 +31,13 @@ static void	wait_start(t_data *dat, int num)
 	pthread_mutex_unlock(&(dat->mut_time_eaten[num]));
 	while (1)
 	{
-		pthread_mutex_lock(&(dat->mut_running));
-		if (dat->running != 0)
+		pthread_mutex_lock(&(dat->mut_ready[num]));
+		if (dat->ready == true)
 			break ;
-		pthread_mutex_unlock(&(dat->mut_running));
+		pthread_mutex_unlock(&(dat->mut_ready[num]));
 		usleep(100);
 	}
-	pthread_mutex_unlock(&(dat->mut_running));
+	pthread_mutex_unlock(&(dat->mut_ready[num]));
 }
 
 // philo routine.

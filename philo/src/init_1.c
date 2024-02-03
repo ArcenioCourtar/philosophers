@@ -38,9 +38,11 @@ bool	init_struct_mut(t_data *dat)
 	if (pthread_mutex_init(&(dat->mut_print), NULL) != 0)
 		return (false);
 	dat->count_mut++;
-	if (!mut_list_init(dat, (dat->mut_time_eaten)))
+	if (!mut_list_init(dat, dat->mut_ready))
 		return (false);
-	if (!mut_list_init(dat, (dat->mut_fork)))
+	if (!mut_list_init(dat, dat->mut_time_eaten))
+		return (false);
+	if (!mut_list_init(dat, dat->mut_fork))
 		return (false);
 	if (dat->noe != -1)
 	{
@@ -73,6 +75,9 @@ bool	init_struct_malloc(t_data *dat)
 	dat->mut_fork = malloc(sizeof(t_mutex) * dat->num);
 	if (!(dat->mut_fork))
 		return (false);
+	dat->mut_ready = malloc(sizeof(t_mutex) * dat->num);
+	if (!(dat->mut_ready))
+		return (false);
 	if (!noe_condition(dat))
 		return (false);
 	return (true);
@@ -81,12 +86,14 @@ bool	init_struct_malloc(t_data *dat)
 // initialize values that aren't passed by the user, and not malloc related
 void	init_struct(t_data *dat)
 {
+	dat->ready = false;
+	dat->running = false;
 	dat->start_time = 0;
-	dat->running = 0;
 	dat->tid = NULL;
 	dat->time_eaten = NULL;
 	dat->forks = NULL;
 	dat->args = NULL;
+	dat->mut_ready = NULL;
 	dat->mut_time_eaten = NULL;
 	dat->mut_fork = NULL;
 	dat->eat_num = NULL;

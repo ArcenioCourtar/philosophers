@@ -17,7 +17,7 @@
 static void	simulation_end(t_data *dat)
 {
 	pthread_mutex_lock(&(dat->mut_running));
-	dat->running = 2;
+	dat->running = false;
 	pthread_mutex_unlock(&(dat->mut_running));
 }
 
