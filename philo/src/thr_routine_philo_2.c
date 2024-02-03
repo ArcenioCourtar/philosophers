@@ -62,7 +62,7 @@ static bool	eat(t_me *me, t_data *dat)
 	while (1)
 	{
 		usleep(TIME_S);
-		if (!check_simulation_status(dat) != 1)
+		if (!check_simulation_status(dat))
 			return (false);
 		if (dat->tte <= my_gettime(dat) - me->time_eaten)
 			return (eat_done(me, dat));
@@ -101,7 +101,7 @@ static bool	philo_sleep(t_me *me, t_data *dat)
 	while (1)
 	{
 		usleep(TIME_S);
-		if (!check_simulation_status(dat) != 1)
+		if (!check_simulation_status(dat))
 			return (false);
 		if (dat->tts <= my_gettime(dat) - time_sleep)
 			return (true);
