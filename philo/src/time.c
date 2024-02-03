@@ -18,16 +18,15 @@
 // During the first call, before the philosophers run, set the start time.
 // After that subtract the start time, from the current time, to get the 
 // time elapsed since the start of the simulation.
-t_ullong	my_gettime(void)
+t_ullong	my_gettime(t_data *dat)
 {
 	struct timeval	newtime;
-	static t_ullong	start_time = 0;
 
 	gettimeofday(&newtime, NULL);
-	if (start_time == 0)
+	if (dat->start_time == 0)
 	{
-		start_time = newtime.tv_sec * 1000000 + newtime.tv_usec;
-		return (start_time);
+		dat->start_time = newtime.tv_sec * 1000000 + newtime.tv_usec;
+		return (dat->start_time);
 	}
-	return ((newtime.tv_sec * 1000000 + newtime.tv_usec) - start_time);
+	return ((newtime.tv_sec * 1000000 + newtime.tv_usec) - dat->start_time);
 }

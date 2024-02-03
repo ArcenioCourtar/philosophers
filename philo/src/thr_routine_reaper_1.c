@@ -42,7 +42,7 @@ void	start_simulation(t_data *dat)
 	}
 	pthread_mutex_lock(&(dat->mut_running));
 	dat->running = 1;
-	my_gettime();
+	my_gettime(dat);
 	pthread_mutex_unlock(&(dat->mut_running));
 }
 

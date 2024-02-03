@@ -42,6 +42,7 @@ typedef struct s_data
 	t_ullong	tte;
 	t_ullong	tts;
 	int			noe;
+	t_ullong	start_time;
 	int			running;
 	t_mutex		mut_running;
 	t_mutex		mut_print;
@@ -90,7 +91,7 @@ void		mut_list_destroy(t_data *dat, t_mutex *list, int len);
 
 // time management
 
-t_ullong	my_gettime(void);
+t_ullong	my_gettime(t_data *dat);
 t_ullong	time_and_print(t_me *me, t_data *dat, const char *txt);
 
 // setting up the struct before the simulation

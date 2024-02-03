@@ -54,7 +54,7 @@ t_ullong	time_and_print(t_me *me, t_data *dat, const char *txt)
 	t_ullong	time;
 
 	pthread_mutex_lock(&(dat->mut_print));
-	time = my_gettime();
+	time = my_gettime(dat);
 	if (time >= me->time_eaten + dat->ttd)
 	{
 		pthread_mutex_unlock(&(dat->mut_print));

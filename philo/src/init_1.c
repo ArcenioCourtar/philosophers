@@ -74,6 +74,7 @@ bool	init_struct_malloc(t_data *dat)
 // initialize values that aren't passed by the user, and not malloc related
 void	init_struct(t_data *dat)
 {
+	dat->start_time = 0;
 	dat->running = 0;
 	dat->tid = NULL;
 	dat->time_eaten = NULL;

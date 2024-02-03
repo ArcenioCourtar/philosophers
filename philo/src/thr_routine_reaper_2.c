@@ -31,7 +31,7 @@ static bool	death_check(t_data *dat, int i)
 	t_ullong	time_curr;
 
 	pthread_mutex_lock(&(dat->mut_time_eaten[i]));
-	time_curr = my_gettime();
+	time_curr = my_gettime(dat);
 	if (time_curr >= (dat->time_eaten[i] + dat->ttd))
 	{
 		pthread_mutex_lock(&(dat->mut_print));
@@ -52,7 +52,7 @@ static bool	eat_num_check(t_data *dat, int lowest_eat)
 		pthread_mutex_lock(&(dat->mut_print));
 		simulation_end(dat);
 		printf("%llu all philos have eaten %i times\n", \
-		my_gettime() / CONVERT, dat->noe);
+		my_gettime(dat) / CONVERT, dat->noe);
 		pthread_mutex_unlock(&(dat->mut_print));
 		return (true);
 	}
