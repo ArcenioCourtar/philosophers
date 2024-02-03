@@ -27,12 +27,12 @@ bool	mut_list_init(t_data *dat, t_mutex *list)
 	return (true);
 }
 
-void	mut_list_destroy(t_data *dat, t_mutex *list, int len)
+void	mut_list_destroy(t_data *dat, t_mutex *list)
 {
 	int	i;
 
 	i = 0;
-	while (i < len && dat->count_mut > 0)
+	while (i < dat->num && dat->count_mut > 0)
 	{
 		pthread_mutex_destroy(&list[i]);
 		i++;

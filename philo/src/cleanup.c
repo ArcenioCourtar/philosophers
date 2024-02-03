@@ -30,21 +30,18 @@ static void	destroy_mutexes(t_data *dat)
 		pthread_mutex_destroy(&(dat->mut_print));
 		dat->count_mut--;
 	}
-	mut_list_destroy(dat, dat->mut_ready, dat->num);
-	mut_list_destroy(dat, dat->mut_time_eaten, dat->num);
-	mut_list_destroy(dat, dat->mut_fork, dat->num);
-	mut_list_destroy(dat, dat->mut_eat_num, dat->num);
+	mut_list_destroy(dat, dat->mut_ready);
+	mut_list_destroy(dat, dat->mut_time_eaten);
+	mut_list_destroy(dat, dat->mut_fork);
+	mut_list_destroy(dat, dat->mut_eat_num);
 }
 
 static void	join_threads(t_data *dat)
 {
-	int	i;
-
-	i = dat->count_thr - 1;
-	while (i >= 0)
+	while (dat->count_thr > 0)
 	{
-		pthread_join(dat->tid[i], NULL);
-		i--;
+		pthread_join(dat->tid[dat->count_thr - 1], NULL);
+		dat->count_thr--;
 	}
 }
 

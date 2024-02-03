@@ -91,7 +91,7 @@ size_t		ft_strlen(const char *s);
 
 // managing mutex arrays
 
-void		mut_list_destroy(t_data *dat, t_mutex *list, int len);
+void		mut_list_destroy(t_data *dat, t_mutex *list);
 bool		mut_list_init(t_data *dat, t_mutex *list);
 
 // time management
