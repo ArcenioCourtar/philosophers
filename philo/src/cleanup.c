@@ -38,10 +38,13 @@ static void	destroy_mutexes(t_data *dat)
 
 static void	join_threads(t_data *dat)
 {
-	while (dat->count_thr > 0)
+	int	i;
+
+	i = 0;
+	while (i < dat->count_thr)
 	{
-		pthread_join(dat->tid[dat->count_thr - 1], NULL);
-		dat->count_thr--;
+		pthread_join(dat->tid[i], NULL);
+		i++;
 	}
 }
 
